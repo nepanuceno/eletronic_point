@@ -20,4 +20,4 @@ Auth::routes();
 Route::get('/',[HomeController::class, 'index']);
 Route::get('/home',[HomeController::class, 'index'])->name('home');
 Route::resource('roles', RoleController::class);
-Route::resource('users', UserController::class);
+Route::resource('users', UserController::class)->middleware('auth');

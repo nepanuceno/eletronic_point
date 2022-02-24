@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @section('content')
 @section('plugins.Datatables', true)
+@section('plugins.Sweetalert2', true)
 
 <div class="row">
     <div class="col-lg-12 margin-tb">
@@ -39,7 +40,7 @@
             @endcan
             @can('role-delete')
                 {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                    {!! Form::button( __('roles.button_role_disable'), ['class' => 'btn btn-danger', 'type'=>'submit']) !!}
+                    {!! Form::button( __('roles.button_role_disable'), ['class' => 'btn btn-danger disable-button', 'type'=>'submit', 'data-active'=>'Desativar']) !!}
                 {!! Form::close() !!}
             @endcan
         </td>
