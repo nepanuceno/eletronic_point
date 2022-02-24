@@ -469,6 +469,11 @@ return [
                     'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
                 ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/custom/alertCmd.js',
+                ],
             ],
         ],
         'Pace' => [

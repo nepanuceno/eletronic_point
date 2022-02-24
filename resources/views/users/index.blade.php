@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @section('content')
 @section('plugins.Datatables', true)
+@section('plugins.Sweetalert2', true)
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -43,7 +44,7 @@
             <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">{{ __('users.user_button_show') }}</a>
             <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">{{ __('users.user_button_edit') }}</a>
                 {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                    {!! Form::button(__('users.user_button_disable'),['class' => 'btn btn-danger', 'type'=>'submit']) !!}
+                    {!! Form::button(__('users.user_button_disable'),['class' => 'btn btn-danger disable-button', 'type'=>'submit', 'data-active'=>'Desativar']) !!}
                 {!! Form::close() !!}
             </td>
         </tr>
