@@ -19,6 +19,6 @@ use App\Http\Controllers\UserController;
 Auth::routes();
 Route::get('/',[HomeController::class, 'index']);
 Route::get('/home',[HomeController::class, 'index'])->name('home');
-Route::get('users/switch-active',[ UserController::class, 'switchActive'])->name('users.switch-active');
+Route::get('users/switch-active',[ UserController::class, 'switchUserShowStatus'])->name('users.switch-active');
 Route::resource('roles', RoleController::class);
 Route::resource('users', UserController::class)->middleware('auth');

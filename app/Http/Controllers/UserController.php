@@ -2,16 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use App\Http\Classes\UserStatusActive;
+use App\Interfaces\Role\RoleInterface;
+use App\Interfaces\User\UserInterface;
 
 class UserController extends Controller
 {
+    const PAGINATION=5;
+
+    private UserInterface $userRepository;
+    private RoleInterface $roleRepository;
+
+    public function __construct(UserInterface $userInterface, RoleInterface $roleInterface)
+    {
+        $this->userRepository = $userInterface;
+        $this->roleRepository = $roleInterface;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -19,11 +33,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $tag = $this->getStatusActive();
-        $data = User::where('active', $tag)
-        ->orderBy('id','DESC')->paginate(5);
+        $tag = UserStatusActive::getUserStatusActive() ? 1:0;
+        $data = $this->userRepository->getAllUsers(self::PAGINATION, $tag);
         return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+            ->with('i', ($request->input('page', 1) - 1) * self::PAGINATION);
     }
 
     /**
@@ -33,7 +46,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = $this->roleRepository->getAllRoles();
         return view('users.create',compact('roles'));
     }
 
@@ -54,11 +67,12 @@ class UserController extends Controller
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $user = $this->userRepository->createUser($input);
+        $this->userRepository->assignRole($user, $request->input('roles'));
+
 
         return redirect()->route('users.index')
-            ->with('success','User created successfully');
+            ->with('success', __('users.str-feedback-create-user'));
     }
 
 
@@ -70,7 +84,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = $this->userRepository->getUser($id);
         return view('users.show',compact('user'));
     }
 
@@ -82,8 +96,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
+        $user = $this->userRepository->getUser($id);
+        $roles = $this->roleRepository->getAllRoles();
         $userRole = $user->roles->pluck('name','name')->all();
 
         return view('users.edit',compact('user','roles','userRole'));
@@ -112,14 +126,14 @@ class UserController extends Controller
             $input = Arr::except($input,array('password'));
         }
 
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user = $this->userRepository->getUser($id);
+        $this->userRepository->updateUser($user, $input);
+        $this->roleRepository->destroyModelHasRole($id);
 
-        $user->assignRole($request->input('roles'));
+        $this->userRepository->assignRole($user,$request->input('roles'));
 
         return redirect()->route('users.index')
-            ->with('success','User updated successfully');
+            ->with('success',__('users.str-feedback-update-user'));
     }
 
     /**
@@ -130,58 +144,27 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        // User::find($id)->delete();
-        // return redirect()->route('users.index')
-        //     ->with('success','User deleted successfully');
-
-        $user = User::find($id);
+        $user = $this->userRepository->getUser($id);
         if($user->active === 1) {
             $user->active = 0;
         } else {
             $user->active = 1;
+            UserStatusActive::setUserStatusActive();
         }
 
         $user->save();
         return redirect()->route('users.index')
-            ->with('success','User updated successfully');
-        // if ($user)
+            ->with('success',__('users.str-feedback-update-user'));
     }
 
     /**
-     * Set valeu session Status User. 0|1
+     * Set value session Status User. 0|1
      *
      * @param null
      * @return \Illuminate\Http\Response
      */
-    public function switchActive() {
-        $user_status_active_exist = session()->has('active');
-
-        if ($user_status_active_exist) {
-            $user_status_active = session('active');
-            session()->forget('active');
-            if ($user_status_active==1) {
-                session(['active' => 0]);
-            } else {
-                session(['active' => 1]);
-            }
-        } else {
-            session(['active' => 0]);
-        }
-
+    public function switchUserShowStatus() {
+        UserStatusActive::setUserStatusActive();
         return redirect()->route('users.index');
-    }
-
-     /**
-     * Get Status User.
-     *
-     * @param null
-     * @return int 0|1
-     */
-    private function getStatusActive() {
-        if (session()->has('active') && session('active')==0) {
-            return 0;
-        } else {
-            return 1;
-        }
     }
 }
