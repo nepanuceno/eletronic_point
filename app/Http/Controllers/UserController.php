@@ -19,7 +19,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
+        $tag = $this->getStatusActive();
+        $data = User::where('active', $tag)
+        ->orderBy('id','DESC')->paginate(5);
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -128,8 +130,58 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
+        // User::find($id)->delete();
+        // return redirect()->route('users.index')
+        //     ->with('success','User deleted successfully');
+
+        $user = User::find($id);
+        if($user->active === 1) {
+            $user->active = 0;
+        } else {
+            $user->active = 1;
+        }
+
+        $user->save();
         return redirect()->route('users.index')
-            ->with('success','User deleted successfully');
+            ->with('success','User updated successfully');
+        // if ($user)
+    }
+
+    /**
+     * Set valeu session Status User. 0|1
+     *
+     * @param null
+     * @return \Illuminate\Http\Response
+     */
+    public function switchActive() {
+        $user_status_active_exist = session()->has('active');
+
+        if ($user_status_active_exist) {
+            $user_status_active = session('active');
+            session()->forget('active');
+            if ($user_status_active==1) {
+                session(['active' => 0]);
+            } else {
+                session(['active' => 1]);
+            }
+        } else {
+            session(['active' => 0]);
+        }
+
+        return redirect()->route('users.index');
+    }
+
+     /**
+     * Get Status User.
+     *
+     * @param null
+     * @return int 0|1
+     */
+    private function getStatusActive() {
+        if (session()->has('active') && session('active')==0) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 }

@@ -491,6 +491,16 @@ return [
                 ],
             ],
         ],
+        'GeneralScripts' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'js/custom/alertDismiss.js',
+                ],
+            ]
+        ],
     ],
 
     /*
