@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Hash;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Classes\UserStatusActive;
 use App\Interfaces\Role\RoleInterface;
@@ -23,6 +21,11 @@ class UserController extends Controller
     {
         $this->userRepository = $userInterface;
         $this->roleRepository = $roleInterface;
+
+        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:user-create', ['only' => ['create','store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
 

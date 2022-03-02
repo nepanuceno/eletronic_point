@@ -17,7 +17,7 @@ class UserStatusActive
             session()->forget('active');
             session(['active' => !$status]);
         } else {
-            session(['active' => true]);
+            session(['active' => false]);
         }
     }
 

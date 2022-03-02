@@ -18,5 +18,6 @@ return [
     'Information'                   => 'Informação',
     'administrative_area'           => 'Área Administrativa',
     'label_users'                   => 'Usuários',
-    'label_roles'                   => 'Perfis'
+    'label_roles'                   => 'Perfis',
+    'manager_area'                  =>  'Área do Gerente',
 ];

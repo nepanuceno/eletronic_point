@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>{{ __('users.users_management') }} {{ session('active')==0?__('users.label_users_status_disable'):'' }}</h2>
+            <h2>{{ __('users.users_management') }} {{ (session()->has('active') && session('active')==0) ?__('users.label_users_status_disable'):'' }}</h2>
         </div>
     </div>
 </div>
