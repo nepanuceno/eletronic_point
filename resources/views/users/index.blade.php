@@ -20,7 +20,8 @@
                 class="btn {{ (session('active')==1 || !session()->has('active'))?'btn-success':'btn-warning' }}"
                 href="{{ url('users/switch-active') }}" >
                 <i class="fas fa-filter pr-1"></i>
-                {{ (session('active')==1 || !session()->has('active'))? __('users.button_users_status_disable') : __('users.button_users_status_enable') }}</a>
+                {{ (session('active')==1 || !session()->has('active'))? __('users.button_users_status_disable') : __('users.button_users_status_enable') }}
+            </a>
         </div>
         <div class="float-right mb-2">
             <a class="btn btn-success" href="{{ route('users.create') }}">{{ __('users.user_button_new') }}</a>

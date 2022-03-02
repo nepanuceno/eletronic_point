@@ -7,6 +7,8 @@ use App\Interfaces\User\UserInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Role\RoleRepository;
 use App\Repositories\User\UserRepository;
+use App\Interfaces\Permission\PermissionInterface;
+use App\Repositories\Permission\PermissionRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserInterface::class, UserRepository::class);
         $this->app->bind(RoleInterface::class, RoleRepository::class);
+        $this->app->bind(PermissionInterface::class, PermissionRepository::class);
     }
 
     /**

@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Edit Role</h2>
+            <h2>{{ __('label_edit_role') }}</h2>
         </div>
         <div class="float-right">
             <a class="btn btn-default" href="{{ route('roles.index') }}"> {{ __('roles.role_button_back_page') }}</a>
@@ -12,7 +12,7 @@
 </div>
 @if (count($errors) > 0)
     <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+        <strong>Whoops!</strong> {{ __('label_error_edit_role') }}
         <ul>
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Hash;
+// use Hash;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Classes\UserStatusActive;
 use App\Interfaces\Role\RoleInterface;
 use App\Interfaces\User\UserInterface;

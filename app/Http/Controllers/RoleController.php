@@ -2,25 +2,30 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-use DB;
+use App\Interfaces\Permission\PermissionInterface;
+use App\Interfaces\Role\RoleInterface;
 
 class RoleController extends Controller
 {
     const PAGINATION=5;
+
+    private RoleInterface $role;
+    private PermissionInterface $permission;
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
+    function __construct(RoleInterface $roleInterface, PermissionInterface $permissionInterface)
     {
-         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:role-create', ['only' => ['create','store']]);
-         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        $this->role = $roleInterface;
+        $this->permission = $permissionInterface;
+
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:role-create', ['only' => ['create','store']]);
+        $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -30,9 +35,13 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','DESC')->paginate(self::PAGINATION);
-        return view('roles.index',compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * self::PAGINATION);
+        try {
+            $roles = $this->role->getRolesOrderBy('id','DESC')->paginate(self::PAGINATION);
+            return view('roles.index',compact('roles'))
+                ->with('i', ($request->input('page', 1) - 1) * self::PAGINATION);
+        } catch (\Throwable $th) {
+            return redirect()->route('roles.index')->with('error',__('error_list_roles'). ' - '.$th->getMessage());
+        }
     }
 
     /**
@@ -42,8 +51,12 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
-        return view('roles.create',compact('permission'));
+        try {
+            $permissions = $this->permission->getPermissions();
+            return view('roles.create',compact('permissions'));
+        } catch (\Throwable $th) {
+            return redirect()->route('roles.index')->with('error',$th->getMessage());
+        }
     }
 
     /**
@@ -58,10 +71,13 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
         ]);
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index')
-                        ->with('success','Role created successfully');
+
+        try {
+            $this->role->createRole($request);
+            return redirect()->route('roles.index')->with('success',__('success_create_role'));
+        } catch (\Throwable $th) {
+            return redirect()->route('roles.index')->with('error',__('error_create_role'). ' - '.$th->getMessage());
+        }
     }
 
     /**
@@ -72,11 +88,13 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$id)
-            ->get();
-        return view('roles.show',compact('role','rolePermissions'));
+        try {
+            $role = $this->role->getRole($id);
+            $rolePermissions = $this->permission->getPermissionsForRole($role->id);
+            return view('roles.show',compact('role','rolePermissions'));
+        } catch (\Throwable $th) {
+            return view('roles.edit')->with('error',__('error_get_fields_role'));
+        }
     }
 
     /**
@@ -87,12 +105,16 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-            ->all();
-        return view('roles.edit',compact('role','permission','rolePermissions'));
+        try {
+            $role = $this->role->getRole($id);
+            $permission = $this->permission->getPermissions();
+            $rolePermissions = $this->permission->getAllPermissionsEditRole($role->id);
+            return view('roles.edit',compact('role','permission','rolePermissions'));
+
+        } catch (\Throwable $th) {
+            return view('roles.edit')->with('error',__('error_get_fields_role'));
+
+        }
     }
 
     /**
@@ -108,12 +130,13 @@ class RoleController extends Controller
             'name' => 'required',
             'permission' => 'required',
         ]);
-        $role = Role::find($id);
-        $role->name = $request->input('name');
-        $role->save();
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully');
+
+        try {
+            $this->role->updateRole($request, $id);
+            return redirect()->route('roles.index')->with('success',__('success_update_role'));
+        } catch (\Throwable $th) {
+            return redirect()->route('roles.index')->with('error',__('error_update_role').' - '.$th->getMessage());
+        }
     }
 
     /**
@@ -124,8 +147,13 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("roles")->where('id',$id)->delete();
-        return redirect()->route('roles.index')
-                        ->with('success','Role deleted successfully');
+        try {
+            $this->role->deleteRole($id);
+            return redirect()->route('roles.index')->with('success',__('success_delete_role'));
+        } catch (\Throwable $th) {
+            return redirect()->route('roles.index')->with('error',__('error_delete_role').' - '. $th->getMessage());
+
+        }
+
     }
 }
