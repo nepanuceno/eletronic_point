@@ -20,4 +20,5 @@ return [
     'label_users'                   => 'Usuários',
     'label_roles'                   => 'Perfis',
     'manager_area'                  =>  'Área do Gerente',
+    'user_role'                     =>  'Perfis por Usuário',
 ];

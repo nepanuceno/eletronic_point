@@ -133,7 +133,6 @@ class UserController extends Controller
         $user = $this->userRepository->getUser($id);
         $this->userRepository->updateUser($user, $input);
         $this->roleRepository->destroyModelHasRole($id);
-
         $this->userRepository->assignRole($user,$request->input('roles'));
 
         return redirect()->route('users.index')
@@ -149,16 +148,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = $this->userRepository->getUser($id);
-        if($user->active === 1) {
-            $user->active = 0;
-        } else {
-            $user->active = 1;
-            UserStatusActive::setUserStatusActive();
-        }
-
+        UserStatusActive::changeStatus($user);
         $user->save();
-        return redirect()->route('users.index')
-            ->with('success',__('users.str-feedback-update-user'));
+        return redirect()->route('users.index')->with('success',__('users.str-feedback-update-user'));
     }
 
     /**

@@ -112,8 +112,7 @@ class RoleController extends Controller
             return view('roles.edit',compact('role','permission','rolePermissions'));
 
         } catch (\Throwable $th) {
-            return view('roles.edit')->with('error',__('error_get_fields_role'));
-
+            return view('roles.edit')->with('error',__('error_get_fields_role'). ' - '.$th->getMessage());
         }
     }
 

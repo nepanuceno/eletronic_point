@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Acl\RoleUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,6 @@ Route::get('/home',[HomeController::class, 'index'])->name('home');
 Route::get('users/switch-active',[ UserController::class, 'switchUserShowStatus'])->name('users.switch-active');
 Route::resource('roles', RoleController::class);
 Route::resource('users', UserController::class)->middleware('auth');
+Route::resource('role_user', RoleUserController::class);
+    Route::get('roles_user/{id}', [RoleUserController::class, 'roles_user']);
+    Route::get('delete_roles_user/{user}/{role}', [RoleUserController::class, 'delete_roles_user']);

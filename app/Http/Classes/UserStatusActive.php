@@ -3,7 +3,6 @@ namespace App\Http\Classes;
 
 class UserStatusActive
 {
-
      /**
      *
      * Set Status User Session.
@@ -32,5 +31,15 @@ class UserStatusActive
             return session('active');
         }
         return true;
+    }
+
+
+    public static function changeStatus($user) {
+        if($user->active === 1) {
+            $user->active = 0;
+        } else {
+            $user->active = 1;
+            self::setUserStatusActive();
+        }
     }
 }

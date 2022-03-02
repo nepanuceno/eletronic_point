@@ -275,6 +275,12 @@ return [
             'icon' => 'fas fa-fw fa-lock',
             'can'   => 'role-list'
         ],
+        [
+            'text' => 'user_role',
+            'url'  => 'role_user',
+            'icon'  => "fa fa-street-view",
+            'can'  => ['role-list'],
+        ],
         // ['header' => 'account_settings'],
         // [
         //     'text' => 'profile',
