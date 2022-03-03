@@ -491,6 +491,11 @@ return [
                     'asset' => true,
                     'location' => 'js/custom/alertCmd.js',
                 ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/custom/alertMessage.js',
+                ],
             ],
         ],
         'Pace' => [

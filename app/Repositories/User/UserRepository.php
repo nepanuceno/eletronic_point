@@ -7,8 +7,12 @@ use App\Interfaces\User\UserInterface;
 
 class UserRepository implements UserInterface
 {
-    public function getAllUsers($pagination, $status_show_user) {
-       return User::where('active', $status_show_user)
+    public function getAllUsersActive($user_status_active) {
+        return User::where('active', $user_status_active)->get();
+    }
+
+    public function getAllUsers($pagination, $user_status_active) {
+       return User::where('active', $user_status_active)
             ->orderBy('id','DESC')
             ->paginate($pagination);
     }

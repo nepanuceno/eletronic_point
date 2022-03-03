@@ -14,6 +14,7 @@ use App\Interfaces\User\UserInterface;
 class UserController extends Controller
 {
     const PAGINATION=5;
+    const STATUS_ACTIVE_USER=1;
 
     private UserInterface $userRepository;
     private RoleInterface $roleRepository;
@@ -37,8 +38,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $tag = UserStatusActive::getUserStatusActive() ? 1:0;
-        $data = $this->userRepository->getAllUsers(self::PAGINATION, $tag);
+        $user_status_active = UserStatusActive::getUserStatusActive() ? 1:0;
+        $data = $this->userRepository->getAllUsers(self::PAGINATION, $user_status_active);
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * self::PAGINATION);
     }
@@ -162,5 +163,9 @@ class UserController extends Controller
     public function switchUserShowStatus() {
         UserStatusActive::setUserStatusActive();
         return redirect()->route('users.index');
+    }
+
+    public function getAllActiveUsers() {
+        return $this->userRepository->getAllUsersActive(self::STATUS_ACTIVE_USER);
     }
 }

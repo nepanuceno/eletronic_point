@@ -55,25 +55,30 @@
         </div>
     </div>
 
-    <span id='are_you_sure' style="display: none">{{ __('roles_user.are_you_sure') }}</span>
-    <span id='after_positive' style="display: none">{{ __('roles_user.after_positive') }}</span>
-    <span id='confirmation_unlink' style="display: none">{{ __('roles_user.confirmation_unlink') }}</span>
-    <span id='unlinked' style="display: none">{{ __('roles_user.unlinked') }}</span>
-    <span id='user_unlinked' style="display: none">{{ __('roles_user.user_unlinked') }}</span>
-    <span id='error_unlinked' style="display: none">{{ __('roles_user.error_unlinked') }}</span>
-    <span id='user_not_unlinked' style="display: none">{{ __('roles_user.user_not_unlinked') }}</span>
-    <span id='cancel' style="display: none">{{ __('roles_user.cancel') }}</span>
-
 @endsection
 
 @section('js')
+<script src="js/custom/confirmeUrlExcludeRoleUserAlert.js"></script>
 <script>
+    function buttonComponent(value, data) {
+        var $button = document.createElement("button");
+        var label = document.createTextNode(value);
+        var $span = document.createElement("span");
+
+        $button.setAttribute('class','btn btn-info text-white btn-sm mx-2');
+        $button.setAttribute('onclick',`confirmeUrlExcludeRoleUserAlert(this, [${data}])`);
+        $span.setAttribute('class','fas fa-trash text-white pl-2');
+
+        $button.appendChild(label);
+        $button.appendChild($span);
+        return $button;
+    }
+
     $(document).ready(function() {
-        $('.select_input_roles').select2();
         $('.select_input_users').select2({
             placeholder: 'Selecione um usuário',
             ajax: {
-                url: '/search_user',
+                url: '/get_all_users_active',
                 dataType: 'json',
                 delay: 250,
                 processResults: function (data) {
@@ -89,7 +94,7 @@
                 cache: true
             }
         });
-       // Bind an event
+
         $('.select_input_users').on('select2:select', function (e) {
             var user = $('.select_input_users').val();
             $(".roles").html('');
@@ -97,16 +102,17 @@
                 url: "/roles_user/"+user,
                 dataType: 'json',
                 success: function(result){
-                    var are_you_sure = document.querySelector('#are_you_sure').textContent;
-                    var after_positive = document.querySelector('#after_positive').textContent;
-                    var confirmation_unlink = document.querySelector('#confirmation_unlink').textContent;
-                    var unlinked = document.querySelector('#unlinked').textContent;
-                    var user_unlinked = document.querySelector('#user_unlinked').textContent;
-                    var error_unlinked = document.querySelector('#error_unlinked').textContent;
-                    var user_not_unlinked = document.querySelector('#user_not_unlinked').textContent;
-                    var cancel = document.querySelector('#cancel').textContent;
+                    let are_you_sure = '{{ __('roles_user.are_you_sure') }}';
+                    let after_positive = '{{ __('roles_user.after_positive') }}';
+                    let confirmation_unlink = '{{ __('roles_user.confirmation_unlink') }}';
+                    let unlinked = '{{ __('roles_user.unlinked') }}';
+                    let user_unlinked = '{{ __('roles_user.user_unlinked') }}';
+                    let error_unlinked = '{{ __('roles_user.error_unlinked') }}';
+                    let user_not_unlinked = '{{ __('roles_user.user_not_unlinked') }}';
+                    let cancel = '{{ __('roles_user.cancel') }}';
                     $.each(result, function(key, value) {
-                        let data = `${user},
+                        let data=
+                            `${user},
                             '${value}',
                             '${are_you_sure}',
                             '${after_positive}',
@@ -116,9 +122,8 @@
                             '${error_unlinked}',
                             '${user_not_unlinked}',
                             '${cancel}'`;
-                        // console.log(data)
-                        $button = "<h5><button onclick=\"confirmeUrlExcludeRoleUserAlert(this, ["+data+"])\" type=\"button\" class=\"btn btn-info text-white btn-sm\">"+value+"<span class=\"fas fa-trash text-white pl-2\"></span></button></h5>";
-                        // console.log($button)
+
+                        $button = buttonComponent(value, data);
                         $(".roles").append($button);
                     });
                 }
