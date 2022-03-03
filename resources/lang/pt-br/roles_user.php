@@ -4,7 +4,7 @@
         'search_user'  =>'Pesquisar Usuário',
         'profiles_user' => 'Perfis por Usuário',
         'user' => 'Usuário',
-        'profiles_assing_user' => 'Perfis para atribuir ao Usuário ',
+        'profiles_assing_user' => 'Vínculo de Perfis a Usuário ',
         'select_profiles' => 'Selecione um Perfil',
         'associate_profile' => 'Associar Perfil',
         'whoops' => 'Opa',

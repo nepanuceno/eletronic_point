@@ -24,6 +24,8 @@ return [
     'label_users_status_disable'    => 'Inativos',
     'button_users_status_enable'    => 'Exibir Ativos',
     'button_users_status_disable'   => 'Exibir Inativos',
-    'str-feedback-create-user'         => 'Usuário Criado com Sucesso!',
-    'str-feedback-update-user'         => 'Usuário Atualizado com Sucesso!',
+    'str-feedback-create-user'      => 'Usuário Criado com Sucesso!',
+    'str-feedback-update-user'      => 'Usuário Atualizado com Sucesso!',
+    'whoops'                        =>  'Opa!',
+    'whoops_text'                   => 'Houve alguns problemas com sua entrada.',
 ];

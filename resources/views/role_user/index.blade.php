@@ -5,7 +5,7 @@
     @if ($message = Session::get('success'))
         <p id="message" style="display: none;">{{ $message }}</p>
     @endif
-    @if (count($errors) > 0)
+    @if ($errors->any())
         <div class="alert alert-danger">
             <strong>{{ __('roles_user.whoops') }}!</strong> {{ __('roles_user.problem_with_data') }}.<br><br>
             <ul>
@@ -15,8 +15,8 @@
             </ul>
         </div>
     @endif
-    <div class="row">
-        <div class="col-md-8">
+    <div class="row pt-4">
+        <div class="col-md-8 mx-auto">
             <div class="card">
                 <h5 class="card-header bg-dark">{{ __('roles_user.profiles_assing_user') }}</h5>
                 <div class="card-body">

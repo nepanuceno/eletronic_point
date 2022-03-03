@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4 mx-auto">
         <div class="card card-primary card-outline">
             <div class="card-body box-profile">
                 <div class="text-center">

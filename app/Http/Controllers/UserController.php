@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Classes\UserStatusActive;
+use App\Http\Requests\UserPostRequest;
 use App\Interfaces\Role\RoleInterface;
 use App\Interfaces\User\UserInterface;
+use App\Http\Requests\UserUpdatePostRequest;
 
 class UserController extends Controller
 {
@@ -61,20 +63,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserPostRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
-        ]);
-
+        $request->validated();
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $user = $this->userRepository->createUser($input);
         $this->userRepository->assignRole($user, $request->input('roles'));
-
 
         return redirect()->route('users.index')
             ->with('success', __('users.str-feedback-create-user'));
@@ -115,14 +110,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdatePostRequest $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
-            'roles' => 'required'
-        ]);
+        $request->validated();
 
         $input = $request->all();
         if(!empty($input['password'])){
