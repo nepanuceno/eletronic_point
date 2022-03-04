@@ -1,5 +1,8 @@
 @extends('adminlte::page')
 @section('content')
+@section('breadcrumb')
+    {{ Breadcrumbs::render('users.show', $user) }}
+@stop
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">

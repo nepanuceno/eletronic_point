@@ -8,6 +8,7 @@ a.forEach(element => {
             title: 'Deseja ' + activeMsg + ' este Servidor?',
             text: "Esta ação poderá ser revertida",
             type: 'warning',
+            icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',

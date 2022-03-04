@@ -29,19 +29,19 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
 // Home > [Users]
 Breadcrumbs::for('users.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push('Servidores', route('users.index'));
+    $trail->push('Usuários', route('users.index'));
 });
 Breadcrumbs::for('users.create', function (BreadcrumbTrail $trail) {
     $trail->parent('users.index');
-    $trail->push('Cadastro de Servidor', route('users.create'));
+    $trail->push('Cadastro de Usuário', route('users.create'));
 });
 Breadcrumbs::for('users.edit', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('users.index');
-    $trail->push('Editar Servidor', route('users.edit', $user->id));
+    $trail->push('Editar Usuário', route('users.edit', $user->id));
 });
 Breadcrumbs::for('users.show', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('users.index');
-    $trail->push('Detalhes do Servidor', route('users.show', $user->id));
+    $trail->push('Detalhes do Usuário', route('users.show', $user->id));
 });
 
 // Home > [Roles]
@@ -60,4 +60,10 @@ Breadcrumbs::for('roles.edit', function (BreadcrumbTrail $trail, $user) {
 Breadcrumbs::for('roles.show', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('roles.index');
     $trail->push('Detalhes do Perfil', route('roles.show', $user->id));
+});
+
+// Home > [UserRoles]
+Breadcrumbs::for('role_user.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Perfis por Usuário', route('role_user.index'));
 });

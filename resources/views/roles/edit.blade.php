@@ -1,9 +1,12 @@
 @extends('adminlte::page')
 @section('content')
+@section('breadcrumb')
+    {{ Breadcrumbs::render('roles.edit', $role) }}
+@stop
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>{{ __('label_edit_role') }}</h2>
+            <h2>{{ __('roles.label_edit_role') }}</h2>
         </div>
         <div class="float-right">
             <a class="btn btn-default" href="{{ route('roles.index') }}"> {{ __('roles.role_button_back_page') }}</a>

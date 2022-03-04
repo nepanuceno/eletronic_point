@@ -1,5 +1,9 @@
 @extends('adminlte::page')
 @section('content')
+@section('breadcrumb')
+    {{ Breadcrumbs::render('roles.create') }}
+@stop
+<div cla
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -32,7 +36,7 @@
         <div class="form-group">
             <strong>{{ __('roles.label_permissions') }}:</strong>
             <br/>
-            @foreach($permission as $value)
+            @foreach($permissions as $value)
                 <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
                 {{ $value->name }}</label>
             <br/>

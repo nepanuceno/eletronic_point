@@ -1,6 +1,9 @@
 @extends('adminlte::page')
 @section('plugins.Select2', true)
 @section('content')
+@section('breadcrumb')
+    {{ Breadcrumbs::render('users.edit', $user) }}
+@stop
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">

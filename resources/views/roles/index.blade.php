@@ -2,7 +2,9 @@
 @section('content')
 @section('plugins.Datatables', true)
 @section('plugins.Sweetalert2', true)
-
+@section('breadcrumb')
+    {{ Breadcrumbs::render('roles.index') }}
+@stop
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="">
@@ -10,7 +12,9 @@
         </div>
         <div class="float-right mb-2">
             @can('role-create')
-                <a class="btn btn-success" href="{{ route('roles.create') }}">{{ __('roles.role_button_new') }}</a>
+                <a class="btn btn-success" href="{{ route('roles.create') }}">
+                    <i class="fas fa-plus"></i>
+                    {{ __('roles.role_button_new') }}</a>
             @endcan
         </div>
     </div>

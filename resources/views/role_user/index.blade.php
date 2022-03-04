@@ -2,6 +2,9 @@
 @section('plugins.Select2', true)
 @section('plugins.Sweetalert2', true)
 @section('content')
+@section('breadcrumb')
+    {{ Breadcrumbs::render('role_user.index') }}
+@stop
     @if ($errors->any())
         <div class="alert alert-danger">
             <strong>{{ __('roles_user.whoops') }}!</strong> {{ __('roles_user.problem_with_data') }}.
@@ -32,7 +35,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>{{ __('roles_user.profiles_assing_user') }}</label>
+                                                <label>{{ __('roles_user.associate_profile') }}</label>
                                                 <select class="select2 select_input_roles" multiple name="roles[]" id="roles" data-placeholder="{{ __('roles_user.select_profiles') }}" style="width: 100%;">
                                                 @foreach ($roles as $role)
                                                     <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -45,7 +48,7 @@
                                 <button class="btn btn-secondary" type="submit"><i class="fas fa-sitemap"></i> {{ __('roles_user.associate_profile') }}</button>
                             </form>
                         </div>
-                        <div class="col-md-4 roles border-left shadow-sm p-3 mb-5 bg-white rounded"></div>
+                        <div class="d-flex align-content-around flex-wrap col-md-4 roles border-left shadow-sm p-1 mb-5 bg-white rounded"></div>
                     </div>
                 </div>
             </div>
