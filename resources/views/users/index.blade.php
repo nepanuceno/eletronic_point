@@ -24,16 +24,13 @@
             </a>
         </div>
         <div class="float-right mb-2">
-            <a class="btn btn-success" href="{{ route('users.create') }}">{{ __('users.user_button_new') }}</a>
+            <a class="btn btn-success" href="{{ route('users.create') }}">
+                <i class="fas fa-user-plus pr-1"></i>
+                {{ __('users.user_button_new') }}
+            </a>
         </div>
     </nav>
 </div>
-
-@if ($message = Session::get('success'))
-    <div class="alert alert-success alert-dismiss">
-        <p>{{ $message }}</p>
-    </div>
-@endif
 
 <table class="table table-striped table-sm" id="table_users">
     <thead class="thead-dark">
@@ -78,4 +75,11 @@
 </table>
 {!! $data->render() !!}
 <p class="text-center text-primary"><small>{{ __('app.interprise_name') }}</small></p>
+
+@stop
+
+@section('js')
+    @if ($message = Session::get('success'))
+        <script>MessageAlert(['{{ $message }}', 'success', '{{ __('app.msg_success') }}']);</script>
+    @endif
 @endsection

@@ -2,12 +2,9 @@
 @section('plugins.Select2', true)
 @section('plugins.Sweetalert2', true)
 @section('content')
-    @if ($message = Session::get('success'))
-        <p id="message" style="display: none;">{{ $message }}</p>
-    @endif
     @if ($errors->any())
         <div class="alert alert-danger">
-            <strong>{{ __('roles_user.whoops') }}!</strong> {{ __('roles_user.problem_with_data') }}.<br><br>
+            <strong>{{ __('roles_user.whoops') }}!</strong> {{ __('roles_user.problem_with_data') }}.
             <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -133,11 +130,11 @@
 </script>
 
 @if ($message = Session::get('success'))
-    <script>MessageAlert(['message','success']);</script>
+    <script>MessageAlert(['{{ $message }}', 'success', '{{ __('app.msg_success') }}']);</script>
 @endif
 
 @if ($message = Session::get('error'))
-    <script>MessageAlert(['message','error']);</script>
+    <script>MessageAlert(['{{ $message }}', 'error', '{{ __('app.msg_error') }}']);</script>
 @endif
 
 @endsection

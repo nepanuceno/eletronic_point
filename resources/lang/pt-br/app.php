@@ -1,5 +1,8 @@
 <?php
 
 return [
-    'interprise_name'   =>  'Aegon Eletronic Point'
+    'interprise_name'   =>  env('APP_NAME', 'APP NAME'),
+    'msg_success'    =>  'Sucesso!',
+    'msg_error'    =>  'Erro!',
+    'msg_warning'    =>  'Atenção!'
 ];

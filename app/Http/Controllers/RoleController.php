@@ -40,7 +40,7 @@ class RoleController extends Controller
             return view('roles.index',compact('roles'))
                 ->with('i', ($request->input('page', 1) - 1) * self::PAGINATION);
         } catch (\Throwable $th) {
-            return redirect()->route('roles.index')->with('error',__('error_list_roles'). ' - '.$th->getMessage());
+            return redirect()->route('roles.index')->with('error',__('roles.error_list_roles'). ' - '.$th->getMessage());
         }
     }
 
@@ -74,9 +74,9 @@ class RoleController extends Controller
 
         try {
             $this->role->createRole($request);
-            return redirect()->route('roles.index')->with('success',__('success_create_role'));
+            return redirect()->route('roles.index')->with('success',__('roles.success_create_role'));
         } catch (\Throwable $th) {
-            return redirect()->route('roles.index')->with('error',__('error_create_role'). ' - '.$th->getMessage());
+            return redirect()->route('roles.index')->with('error',__('roles.error_create_role'). ' - '.$th->getMessage());
         }
     }
 
@@ -93,7 +93,7 @@ class RoleController extends Controller
             $rolePermissions = $this->permission->getPermissionsForRole($role->id);
             return view('roles.show',compact('role','rolePermissions'));
         } catch (\Throwable $th) {
-            return view('roles.edit')->with('error',__('error_get_fields_role'));
+            return view('roles.edit')->with('error',__('roles.error_get_fields_role'));
         }
     }
 
@@ -112,7 +112,7 @@ class RoleController extends Controller
             return view('roles.edit',compact('role','permission','rolePermissions'));
 
         } catch (\Throwable $th) {
-            return view('roles.edit')->with('error',__('error_get_fields_role'). ' - '.$th->getMessage());
+            return view('roles.edit')->with('error',__('roles.error_get_fields_role'). ' - '.$th->getMessage());
         }
     }
 
@@ -132,9 +132,9 @@ class RoleController extends Controller
 
         try {
             $this->role->updateRole($request, $id);
-            return redirect()->route('roles.index')->with('success',__('success_update_role'));
+            return redirect()->route('roles.index')->with('success',__('roles.success_update_role'));
         } catch (\Throwable $th) {
-            return redirect()->route('roles.index')->with('error',__('error_update_role').' - '.$th->getMessage());
+            return redirect()->route('roles.index')->with('error',__('roles.error_update_role').' - '.$th->getMessage());
         }
     }
 
@@ -148,10 +148,9 @@ class RoleController extends Controller
     {
         try {
             $this->role->deleteRole($id);
-            return redirect()->route('roles.index')->with('success',__('success_delete_role'));
+            return redirect()->route('roles.index')->with('success',__('roles.success_delete_role'));
         } catch (\Throwable $th) {
-            return redirect()->route('roles.index')->with('error',__('error_delete_role').' - '. $th->getMessage());
-
+            return redirect()->route('roles.index')->with('error',__('roles.error_delete_role').' - '. $th->getMessage());
         }
 
     }
