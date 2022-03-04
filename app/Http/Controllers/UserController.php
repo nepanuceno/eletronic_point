@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-// use Hash;
+//TODO Implementar os blocos Try/Catch
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -71,6 +71,8 @@ class UserController extends Controller
         $user = $this->userRepository->createUser($input);
         $this->userRepository->assignRole($user, $request->input('roles'));
 
+        activity()->log(__('users.create_user_success'));
+
         return redirect()->route('users.index')
             ->with('success', __('users.str-feedback-create-user'));
     }
@@ -125,6 +127,7 @@ class UserController extends Controller
         $this->userRepository->updateUser($user, $input);
         $this->roleRepository->destroyModelHasRole($id);
         $this->userRepository->assignRole($user,$request->input('roles'));
+        activity()->log(__('users.edit_user_success'));
 
         return redirect()->route('users.index')
             ->with('success',__('users.str-feedback-update-user'));
@@ -141,6 +144,8 @@ class UserController extends Controller
         $user = $this->userRepository->getUser($id);
         UserStatusActive::changeStatus($user);
         $user->save();
+        activity()->log(__('users.disable_user_success'));
+
         return redirect()->route('users.index')->with('success',__('users.str-feedback-update-user'));
     }
 

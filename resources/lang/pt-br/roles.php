@@ -26,4 +26,8 @@ return [
     'error_update_role'             => 'Problemas ao atualizar Perfil!',
     'success_delete_role'           => 'Perfil exlcuído com Sucesso!',
     'error_delete_role'             => 'Houve um problema ao excluir o Perfil!',
+    'create_role_success'           =>  'Perfil criado com sucesso!',
+    'create_role_error'             =>  'Erro ao criar perfil!',
+    'edit_role_success'             => 'Perfil Alterado com sucesso!',
+    'edit_role_error'               => 'Erro ao alterar Perfil!',
 ];

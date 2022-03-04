@@ -72,10 +72,13 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
 
+
         try {
             $this->role->createRole($request);
+            activity()->log(__('roles.create_role_success'));
             return redirect()->route('roles.index')->with('success',__('roles.success_create_role'));
         } catch (\Throwable $th) {
+            activity()->log(__('roles.create_role_error'). ' - '.$th->getMessage());
             return redirect()->route('roles.index')->with('error',__('roles.error_create_role'). ' - '.$th->getMessage());
         }
     }
@@ -109,6 +112,7 @@ class RoleController extends Controller
             $role = $this->role->getRole($id);
             $permission = $this->permission->getPermissions();
             $rolePermissions = $this->permission->getAllPermissionsEditRole($role->id);
+
             return view('roles.edit',compact('role','permission','rolePermissions'));
 
         } catch (\Throwable $th) {
@@ -132,8 +136,11 @@ class RoleController extends Controller
 
         try {
             $this->role->updateRole($request, $id);
+            activity()->log(__('roles.edit_role_success'));
+
             return redirect()->route('roles.index')->with('success',__('roles.success_update_role'));
         } catch (\Throwable $th) {
+            activity()->log(__('roles.edit_role_error'. ' - '.$th->getMessage()));
             return redirect()->route('roles.index')->with('error',__('roles.error_update_role').' - '.$th->getMessage());
         }
     }
@@ -148,10 +155,13 @@ class RoleController extends Controller
     {
         try {
             $this->role->deleteRole($id);
+            activity()->log(__('roles.destroy_role_success'));
+
             return redirect()->route('roles.index')->with('success',__('roles.success_delete_role'));
         } catch (\Throwable $th) {
+            activity()->log(__('roles.destroy_role_error'. ' - '.$th->getMessage()));
+
             return redirect()->route('roles.index')->with('error',__('roles.error_delete_role').' - '. $th->getMessage());
         }
-
     }
 }

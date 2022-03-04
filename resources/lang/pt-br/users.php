@@ -27,5 +27,9 @@ return [
     'str-feedback-create-user'      => 'Usuário Criado com Sucesso!',
     'str-feedback-update-user'      => 'Usuário Atualizado com Sucesso!',
     'whoops'                        =>  'Opa!',
-    'whoops_text'                   => 'Houve alguns problemas com sua entrada.',
+    'whoops_text'                   =>  'Houve alguns problemas com sua entrada.',
+    'user_login_success'            =>  'Logado com sucesso.',
+    'create_user_success'           =>  'Usuário criado com sucesso!',
+    'disable_user_success'          =>  'Usuário desabilitado com sucesso!',
+    'edit_user_success'             =>  'Usuário Editado com sucesso!',
 ];
