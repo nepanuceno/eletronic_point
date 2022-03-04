@@ -1,10 +1,14 @@
 @extends('adminlte::page')
 @section('content')
+
 @section('plugins.Datatables', true)
 @section('plugins.Sweetalert2', true)
 @section('plugins.GeneralScripts', true)
 @section('plugins.BootstrapSwitch', true)
 
+@section('breadcrumb')
+    {{ Breadcrumbs::render('users.index') }}
+@stop
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
