@@ -32,4 +32,10 @@ return [
     'create_user_success'           =>  'Usuário criado com sucesso!',
     'disable_user_success'          =>  'Usuário desabilitado com sucesso!',
     'edit_user_success'             =>  'Usuário Editado com sucesso!',
+    'user_list_error'               =>  'Erro ao listar usuários!',
+    'data_load_error'               =>  'Erro ao carregar dados!',
+    'create_user_error'             =>  'Erro ao criar usuário!',
+    'show_user_error'               =>  'Erro ao consultar usuário!',
+    'update_user_error'             =>  'Erro ao atualizar usuário!',
+
 ];

@@ -77,7 +77,9 @@
         @endforeach
     </tbody>
 </table>
-{!! $data->render() !!}
+@if ($data->render())
+    {!! $data->render() !!}
+@endif
 <p class="text-center text-primary"><small>{{ __('app.interprise_name') }}</small></p>
 
 @stop

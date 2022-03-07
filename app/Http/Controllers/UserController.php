@@ -40,10 +40,14 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $user_status_active = UserStatusActive::getUserStatusActive() ? 1:0;
-        $data = $this->userRepository->getAllUsers(self::PAGINATION, $user_status_active);
-        return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * self::PAGINATION);
+        try {
+            $user_status_active = UserStatusActive::getUserStatusActive() ? 1:0;
+            $data = $this->userRepository->getAllUsers(self::PAGINATION, $user_status_active);
+            return view('users.index',compact('data'))
+                ->with('i', ($request->input('page', 1) - 1) * self::PAGINATION);
+        } catch (\Throwable $th) {
+            return view('users.index')->with('error',__('user_list_error').$th->getMessage());
+        }
     }
 
     /**
@@ -53,8 +57,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = $this->roleRepository->getAllRoles();
-        return view('users.create',compact('roles'));
+        try {
+            $roles = $this->roleRepository->getAllRoles();
+            return view('users.create',compact('roles'));
+        } catch (\Throwable $th) {
+            return view('users.index')->with('error',__('data_load_error').$th->getMessage());
+        }
     }
 
     /**
@@ -68,13 +76,18 @@ class UserController extends Controller
         $request->validated();
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-        $user = $this->userRepository->createUser($input);
-        $this->userRepository->assignRole($user, $request->input('roles'));
 
-        activity()->log(__('users.create_user_success'));
 
-        return redirect()->route('users.index')
-            ->with('success', __('users.str-feedback-create-user'));
+        try {
+            $user = $this->userRepository->createUser($input);
+            $this->userRepository->assignRole($user, $request->input('roles'));
+
+            activity()->log(__('users.create_user_success'));
+            return redirect()->route('users.index')
+                ->with('success', __('users.str-feedback-create-user'));
+        } catch (\Throwable $th) {
+            return view('users.index')->with('error',__('create_user_error').$th->getMessage());
+        }
     }
 
 
@@ -86,8 +99,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->userRepository->getUser($id);
-        return view('users.show',compact('user'));
+        try {
+            $user = $this->userRepository->getUser($id);
+            return view('users.show',compact('user'));
+        } catch (\Throwable $th) {
+            return view('users.index')->with('error',__('show_user_error').$th->getMessage());
+        }
     }
 
     /**
@@ -98,11 +115,18 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->userRepository->getUser($id);
-        $roles = $this->roleRepository->getAllRoles();
-        $userRole = $user->roles->pluck('name','name')->all();
 
-        return view('users.edit',compact('user','roles','userRole'));
+        try {
+            $user = $this->userRepository->getUser($id);
+            $roles = $this->roleRepository->getAllRoles();
+            $userRole = $user->roles->pluck('name','name')->all();
+
+            return view('users.edit',compact('user','roles','userRole'));
+            //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            return view('users.index')->with('error',__('update_user_error').$th->getMessage());
+        }
     }
 
     /**
@@ -123,14 +147,19 @@ class UserController extends Controller
             $input = Arr::except($input,array('password'));
         }
 
-        $user = $this->userRepository->getUser($id);
-        $this->userRepository->updateUser($user, $input);
-        $this->roleRepository->destroyModelHasRole($id);
-        $this->userRepository->assignRole($user,$request->input('roles'));
-        activity()->log(__('users.edit_user_success'));
 
-        return redirect()->route('users.index')
-            ->with('success',__('users.str-feedback-update-user'));
+        try {
+            $user = $this->userRepository->getUser($id);
+            $this->userRepository->updateUser($user, $input);
+            $this->roleRepository->destroyModelHasRole($id);
+            $this->userRepository->assignRole($user,$request->input('roles'));
+            activity()->log(__('users.edit_user_success'));
+
+            return redirect()->route('users.index')
+                ->with('success',__('users.str-feedback-update-user'));
+        } catch (\Throwable $th) {
+            return view('users.index')->with('error',__('update_user_error').$th->getMessage());
+        }
     }
 
     /**
@@ -141,12 +170,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = $this->userRepository->getUser($id);
-        UserStatusActive::changeStatus($user);
-        $user->save();
-        activity()->log(__('users.disable_user_success'));
 
-        return redirect()->route('users.index')->with('success',__('users.str-feedback-update-user'));
+        try {
+            $user = $this->userRepository->getUser($id);
+            UserStatusActive::changeStatus($user);
+            $user->save();
+            activity()->log(__('users.disable_user_success'));
+            return redirect()->route('users.index')->with('success',__('users.str-feedback-update-user'));
+        } catch (\Throwable $th) {
+            return view('users.index')->with('error',__('disable_user_error').$th->getMessage());
+        }
     }
 
     /**
