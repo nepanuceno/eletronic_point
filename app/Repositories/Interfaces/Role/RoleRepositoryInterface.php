@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Interfaces\Role;
+namespace App\Repositories\Interfaces\Role;
 
-interface RoleInterface
+interface RoleRepositoryInterface
 {
     public function getAllRoles();
     public function destroyModelHasRole($user_id);

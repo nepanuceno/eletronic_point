@@ -9,19 +9,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Classes\UserStatusActive;
 use App\Http\Requests\UserPostRequest;
-use App\Interfaces\Role\RoleInterface;
-use App\Interfaces\User\UserInterface;
 use App\Http\Requests\UserUpdatePostRequest;
+use App\Repositories\Interfaces\Role\RoleRepositoryInterface;
+use App\Repositories\Interfaces\User\UserRepositoryInterface;
 
 class UserController extends Controller
 {
     const PAGINATION=5;
     const STATUS_ACTIVE_USER=1;
 
-    private UserInterface $userRepository;
-    private RoleInterface $roleRepository;
+    private $userRepository;
+    private $roleRepository;
 
-    public function __construct(UserInterface $userInterface, RoleInterface $roleInterface)
+    public function __construct(UserRepositoryInterface $userInterface, RoleRepositoryInterface $roleInterface)
     {
         $this->userRepository = $userInterface;
         $this->roleRepository = $roleInterface;
@@ -31,7 +31,6 @@ class UserController extends Controller
         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
-
 
     /**
      * Display a listing of the resource.
@@ -194,6 +193,10 @@ class UserController extends Controller
     }
 
     public function getAllActiveUsers() {
-        return $this->userRepository->getAllUsersActive(self::STATUS_ACTIVE_USER);
+        try {
+            return $this->userRepository->getAllUsersActive(self::STATUS_ACTIVE_USER);
+        } catch (\Throwable $th) {
+            return view('role_user.index')->with('error', __('user_list_error').$th->getMessage());
+        }
     }
 }

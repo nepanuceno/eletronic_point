@@ -2,25 +2,25 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Interfaces\Permission\PermissionInterface;
-use App\Interfaces\Role\RoleInterface;
+use App\Repositories\Interfaces\Role\RoleRepositoryInterface;
+use App\Repositories\Interfaces\Permission\PermissionRepositoryInterface;
 
 class RoleController extends Controller
 {
     const PAGINATION=5;
 
-    private RoleInterface $role;
-    private PermissionInterface $permission;
+    private $role;
+    private $permission;
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct(RoleInterface $roleInterface, PermissionInterface $permissionInterface)
+    function __construct(RoleRepositoryInterface $roleRepositoryInterface, PermissionRepositoryInterface $permissionRepositoryInterface)
     {
-        $this->role = $roleInterface;
-        $this->permission = $permissionInterface;
+        $this->role = $roleRepositoryInterface;
+        $this->permission = $permissionRepositoryInterface;
 
         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
         $this->middleware('permission:role-create', ['only' => ['create','store']]);

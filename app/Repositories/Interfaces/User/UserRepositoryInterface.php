@@ -1,7 +1,7 @@
 <?php
-namespace App\Interfaces\User;
+namespace App\Repositories\Interfaces\User;
 
-interface UserInterface
+interface UserRepositoryInterface
 {
      /**
      * Get Active Users.

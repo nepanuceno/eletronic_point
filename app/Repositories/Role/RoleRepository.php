@@ -4,9 +4,9 @@ namespace App\Repositories\Role;
 
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
-use App\Interfaces\Role\RoleInterface;
+use App\Repositories\Interfaces\Role\RoleRepositoryInterface;
 
-class RoleRepository implements RoleInterface
+class RoleRepository implements RoleRepositoryInterface
 {
     public function getAllRoles() {
         return Role::pluck('name','name')->all();

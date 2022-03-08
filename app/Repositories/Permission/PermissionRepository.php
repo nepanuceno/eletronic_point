@@ -4,9 +4,9 @@ namespace App\Repositories\Permission;
 
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
-use App\Interfaces\Permission\PermissionInterface;
+use App\Repositories\Interfaces\Permission\PermissionRepositoryInterface;
 
-class PermissionRepository implements PermissionInterface
+class PermissionRepository implements PermissionRepositoryInterface
 {
     public function getPermissions() {
        return Permission::get();

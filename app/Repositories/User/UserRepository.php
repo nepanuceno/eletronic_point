@@ -3,9 +3,9 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
-use App\Interfaces\User\UserInterface;
+use App\Repositories\Interfaces\User\UserRepositoryInterface;
 
-class UserRepository implements UserInterface
+class UserRepository implements UserRepositoryInterface
 {
     public function getAllUsersActive($user_status_active) {
         return User::where('active', $user_status_active)->get();

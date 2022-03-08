@@ -1,7 +1,7 @@
 <?php
-namespace App\Interfaces\Permission;
+namespace App\Repositories\Interfaces\Permission;
 
-interface PermissionInterface
+interface PermissionRepositoryInterface
 {
     public function getPermissions();
     public function getPermissionsForRole($role_id);
