@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 //TODO Implementar os blocos Try/Catch
 use Illuminate\Support\Arr;
@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Classes\UserStatusActive;
-use App\Http\Requests\UserPostRequest;
-use App\Http\Requests\UserUpdatePostRequest;
+use App\Http\Requests\User\UserPostRequest;
+use App\Http\Requests\User\UserUpdatePostRequest;
 use App\Repositories\Interfaces\Role\RoleRepositoryInterface;
 use App\Repositories\Interfaces\User\UserRepositoryInterface;
 
@@ -76,7 +76,6 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
-
         try {
             $user = $this->userRepository->createUser($input);
             $this->userRepository->assignRole($user, $request->input('roles'));
@@ -114,7 +113,6 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-
         try {
             $user = $this->userRepository->getUser($id);
             $roles = $this->roleRepository->getAllRoles();
@@ -138,14 +136,12 @@ class UserController extends Controller
     public function update(UserUpdatePostRequest $request, $id)
     {
         $request->validated();
-
         $input = $request->all();
         if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
         }else{
             $input = Arr::except($input,array('password'));
         }
-
 
         try {
             $user = $this->userRepository->getUser($id);
@@ -169,7 +165,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
         try {
             $user = $this->userRepository->getUser($id);
             UserStatusActive::changeStatus($user);

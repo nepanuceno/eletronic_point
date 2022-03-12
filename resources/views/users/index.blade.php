@@ -66,9 +66,14 @@
                     {!! Form::button(
                         ($user->active===1) ? __('users.user_button_disable'):__('users.user_button_enable'),
                         [
+                            'type'=>'submit',
+                            'type-icon' => 'question',
+                            'data-title'=> ($user->active==1 ? 'Desativar':'Reativar').' '.$user->name.'?',
                             'class' => 'btn btn-danger disable-button',
                             'type'=>'submit',
-                            'data-active'=> $user->active==1 ? 'Desativar':'Reativar'
+                            'data-text'=>'Tem certeza desta ação?',
+                            'confirm-button-text'=>'Sim',
+                            'cancel-button-text'=>'Não',
                         ]
                     ) !!}
                 {!! Form::close() !!}

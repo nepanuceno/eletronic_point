@@ -244,7 +244,7 @@ return [
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'can'  => 'manager',
         ],
         // [
         //     'text'        => 'pages',
@@ -255,7 +255,12 @@ return [
         // ],
         [
             'header' => 'manager_area',
-            'can' => ['user-list'],
+            'can' => ['employee-list', 'bookmark-people-list'],
+            'classes'  => 'text-yellow text-bold',
+        ],
+        [
+            'header' => 'administrative_area',
+            'can' => ['role-list'],
             'classes'  => 'text-yellow text-bold',
         ],
         [
@@ -263,11 +268,6 @@ return [
             'url'  => '/users',
             'icon' => 'fas fa-fw fa-user',
             'can'   => 'user-list'
-        ],
-        [
-            'header' => 'administrative_area',
-            'can' => ['role-list'],
-            'classes'  => 'text-yellow text-bold',
         ],
         [
             'text' => 'label_roles',

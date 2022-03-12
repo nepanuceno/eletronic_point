@@ -1,6 +1,8 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Acl;
 use Illuminate\Http\Request;
+use App\Http\Requests\RoleRequest;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\Role\RoleRepositoryInterface;
 use App\Repositories\Interfaces\Permission\PermissionRepositoryInterface;
@@ -22,7 +24,7 @@ class RoleController extends Controller
         $this->role = $roleRepositoryInterface;
         $this->permission = $permissionRepositoryInterface;
 
-        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index']]);
         $this->middleware('permission:role-create', ['only' => ['create','store']]);
         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
@@ -65,7 +67,7 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
@@ -127,7 +129,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RoleRequest $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -153,6 +155,10 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        if ($this->roleIsAdmin($id)) {
+            return redirect()->route('roles.index')->with('error',__('roles.error_delete_role').' - '. __('roles.forbidden_delete_profile_admin'));
+        }
+
         try {
             $this->role->deleteRole($id);
             activity()->log(__('roles.destroy_role_success'));
@@ -162,6 +168,13 @@ class RoleController extends Controller
             activity()->log(__('roles.destroy_role_error'. ' - '.$th->getMessage()));
 
             return redirect()->route('roles.index')->with('error',__('roles.error_delete_role').' - '. $th->getMessage());
+        }
+    }
+
+    private function roleIsAdmin($role_id) {
+        $role = Role::find($role_id);
+        if($role->name == config('app.user_admin')) {
+            return true;
         }
     }
 }

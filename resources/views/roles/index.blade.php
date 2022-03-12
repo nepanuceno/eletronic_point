@@ -34,15 +34,32 @@
             <td>{{ ++$i }}</td>
             <td>{{ $role->name }}</td>
             <td>
-                <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">{{ __('roles.button_role_show') }}</a>
-                @can('role-edit')
-                    <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">{{ __('roles.button_role_edit') }}</a>
-                @endcan
-                @can('role-delete')
-                    {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                        {!! Form::button( __('roles.button_role_disable'), ['class' => 'btn btn-danger disable-button', 'type'=>'submit', 'data-active'=>'Desativar']) !!}
-                    {!! Form::close() !!}
-                @endcan
+                <div class="d-flex justify-content-end">
+                    <div class="p-1">
+                        <a class="btn btn-info ml-20" href="{{ route('roles.show',$role->id) }}">{{ __('roles.button_role_show') }}</a>
+                    </div>
+                    <div class="p-1">
+                        @can('role-edit')
+                        <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">{{ __('roles.button_role_edit') }}</a>
+                        @endcan
+                    </div>
+                    <div class="p-1">
+                        @can('role-delete')
+                        {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
+                            {!! Form::button( __('roles.button_role_disable'),
+                            [
+                                'class' => 'btn btn-danger disable-button',
+                                'type'=>'submit',
+                                'data-title'=>'Desativar o Perfil '.$role->name,
+                                'data-text'=>'Tem certeza desta ação?',
+                                'confirm-button-text'=>'Sim',
+                                'cancel-button-text'=>'Não',
+                                'type-icon' => 'question',
+                            ]) !!}
+                        {!! Form::close() !!}
+                        @endcan
+                    </div>
+                  </div>
             </td>
         </tr>
         @endforeach

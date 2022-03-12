@@ -10,6 +10,20 @@
 
 ## Start
 
+- cp .env.example .env
+
+Modifique e/ou acrescente as variáveis de ambiente referente ao Data Base
+E-Mail etc.
+
+- Caso queira, modifique as variáveis de valore do usuário Administrador padrão e o nome 
+do Perfil de Administrador do Sistema.
+
+USER_ADMIN="Administrator"
+USER_EMAIL_ADMIN="admin@gmail.com"
+USER_PWD_ADMIN=('123456')
+
+ROLE_ADMIN="Administrator"
+
 - composer install
 - php artisan db:seed --class=PermissionTableSeeder
 - php artisan db:seed --class=CreateAdminUserSeeder

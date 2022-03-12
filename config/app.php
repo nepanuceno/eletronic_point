@@ -14,6 +14,12 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'interprise_name' => env('INTERPRISE_NAME', 'Interprise Name'),
+    'user_admin' => env('USER_ADMIN', 'Administrator'),
+    'user_email_admin' => env('USER_MAIL_ADMIN', 'admin@gmail.com'),
+    'user_pwd_admin' =>env('USER_PWD_ADMIN','123456'),
+
+    'role_admin' => env('ROLE_ADMIN', 'Administrator'),
 
     /*
     |--------------------------------------------------------------------------

@@ -30,4 +30,5 @@ return [
     'create_role_error'             =>  'Erro ao criar perfil!',
     'edit_role_success'             => 'Perfil Alterado com sucesso!',
     'edit_role_error'               => 'Erro ao alterar Perfil!',
+    'forbidden_delete_profile_admin'=>  'Proibido apagar o Perfil padrão '.config('app.role_admin'),
 ];
