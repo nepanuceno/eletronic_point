@@ -47,5 +47,5 @@
     </div>
 </div>
 {!! Form::close() !!}
-@endsection
 <p class="text-center text-primary"><small>{{ __('app.interprise.name') }}</small></p>
+@endsection
