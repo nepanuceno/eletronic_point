@@ -478,6 +478,31 @@ return [
                 ],
             ],
         ],
+        'icheckBootstrap' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor\icheck-bootstrap\icheck-bootstrap.min.css'
+                ]
+            ],
+        ],
+        'bootstrap4DualListbox' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js'
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'
+                ]
+            ]
+        ],
         'Sweetalert2' => [
             'active' => false,
             'files' => [
