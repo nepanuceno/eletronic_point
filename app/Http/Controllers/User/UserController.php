@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-//TODO Implementar os blocos Try/Catch
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

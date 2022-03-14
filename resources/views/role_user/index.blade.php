@@ -16,7 +16,7 @@
         </div>
     @endif
     <div class="row pt-4">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-12 mx-auto">
             <div class="card">
                 <h5 class="card-header bg-dark">{{ __('roles_user.profiles_assing_user') }}</h5>
                 <div class="card-body">
@@ -28,8 +28,11 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>{{ __('roles_user.user') }}</label>
-                                                <select class="select2bs4 select_input_users" id="user" name="user" data-placeholder="{{ __('roles_user.search_user') }}" style="width: 100%;">
-                                                <option value="null">{{ __('roles_user.search_user') }}</option>
+                                                <select class="select2bs4 select_input_users select2" id="user" name="user" data-placeholder="{{ __('roles_user.search_user') }}" style="width: 100%;">
+                                                    <option value="null">{{ __('roles_user.search_user') }}</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -75,25 +78,6 @@
     }
 
     $(document).ready(function() {
-        $('.select_input_users').select2({
-            placeholder: 'Selecione um usuário',
-            ajax: {
-                url: '/get_all_users_active',
-                dataType: 'json',
-                delay: 250,
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (item) {
-                            return {
-                                text: item.name,
-                                id: item.id
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
 
         $('.select_input_users').on('select2:select', function (e) {
             var user = $('.select_input_users').val();
