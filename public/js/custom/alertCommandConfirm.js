@@ -11,8 +11,7 @@ a.forEach(element => {
         Swal.fire({
             title: dataTitle,
             text: dataText,
-            // type: 'warning',
-            icon: icon, //'warning',
+            icon: icon,
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -27,4 +26,3 @@ a.forEach(element => {
         })
     })
 });
-//@TODO Tornar a função dinâmica.

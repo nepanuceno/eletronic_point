@@ -4,6 +4,7 @@ namespace App\Repositories\Interfaces\Role;
 
 interface RoleRepositoryInterface
 {
+    public function getRoles();
     public function getAllRoles();
     public function destroyModelHasRole($user_id);
     public function getRolesOrderBy($field, $order);

@@ -8,6 +8,10 @@ use App\Repositories\Interfaces\Role\RoleRepositoryInterface;
 
 class RoleRepository implements RoleRepositoryInterface
 {
+    public function getRoles() {
+        return Role::pluck('name','id')->all();
+    }
+
     public function getAllRoles() {
         return Role::pluck('name','name')->all();
     }

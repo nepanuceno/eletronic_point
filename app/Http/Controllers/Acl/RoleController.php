@@ -1,9 +1,8 @@
 <?php
 namespace App\Http\Controllers\Acl;
 use Illuminate\Http\Request;
-use App\Http\Requests\RoleRequest;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Role\RoleRequest;
 use App\Repositories\Interfaces\Role\RoleRepositoryInterface;
 use App\Repositories\Interfaces\Permission\PermissionRepositoryInterface;
 
@@ -69,12 +68,6 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:roles,name',
-            'permission' => 'required',
-        ]);
-
-
         try {
             $this->role->createRole($request);
             activity()->log(__('roles.create_role_success'));
@@ -172,7 +165,7 @@ class RoleController extends Controller
     }
 
     private function roleIsAdmin($role_id) {
-        $role = Role::find($role_id);
+        $role = $this->role->getRole($role_id);
         if($role->name == config('app.user_admin')) {
             return true;
         }

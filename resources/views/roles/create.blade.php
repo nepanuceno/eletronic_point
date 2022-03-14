@@ -3,7 +3,7 @@
 @section('breadcrumb')
     {{ Breadcrumbs::render('roles.create') }}
 @stop
-<div cla
+
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -16,7 +16,7 @@
 </div>
 @if (count($errors) > 0)
     <div class="alert alert-danger">
-        <strong>{{ __('whoops') }}</strong> {{ __('whoops_text') }}<br><br>
+        <strong>{{ __('roles.whoops') }}</strong> {{ __('roles.whoops_text') }}<br><br>
         <ul>
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -48,5 +48,5 @@
     </div>
 </div>
 {!! Form::close() !!}
-<p class="text-center text-primary"><small>{{ __('app.interprise.name') }}</small></p>
+<p class="text-center text-primary"><small>{{ __('app.interprise_name') }}</small></p>
 @endsection

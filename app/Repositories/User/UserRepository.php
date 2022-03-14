@@ -7,7 +7,11 @@ use App\Repositories\Interfaces\User\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function getAllUsersActive($user_status_active) {
+    public function getAllUsersActive($user_status_active, $pluck=false) {
+        if ($pluck) {
+            return User::where('active', $user_status_active)
+            ->pluck('name', 'id');
+        }
         return User::where('active', $user_status_active)->get();
     }
 

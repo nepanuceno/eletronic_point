@@ -489,7 +489,7 @@ return [
                 [
                     'type' => 'js',
                     'asset' => true,
-                    'location' => 'js/custom/alertCmd.js',
+                    'location' => 'js/custom/alertCommandConfirm.js',
                 ],
                 [
                     'type' => 'js',
