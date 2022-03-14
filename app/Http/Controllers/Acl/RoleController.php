@@ -105,11 +105,9 @@ class RoleController extends Controller
     {
         try {
             $role = $this->role->getRole($id);
-            $permission = $this->permission->getPermissions();
+            $permissions = $this->permission->getPermissions();
             $rolePermissions = $this->permission->getAllPermissionsEditRole($role->id);
-
-            return view('roles.edit',compact('role','permission','rolePermissions'));
-
+            return view('roles.edit',compact('role','permissions','rolePermissions'));
         } catch (\Throwable $th) {
             return view('roles.edit')->with('error',__('roles.error_get_fields_role'). ' - '.$th->getMessage());
         }
@@ -124,11 +122,6 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'permission' => 'required',
-        ]);
-
         try {
             $this->role->updateRole($request, $id);
             activity()->log(__('roles.edit_role_success'));

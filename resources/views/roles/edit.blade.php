@@ -1,5 +1,7 @@
 @extends('adminlte::page')
 @section('content')
+@section('plugins.bootstrap4DualListbox', true)
+
 @section('breadcrumb')
     {{ Breadcrumbs::render('roles.edit', $role) }}
 @stop
@@ -33,13 +35,11 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <strong>{{ __('roles.label_permissions') }}:</strong>
-            <br/>
-            @foreach($permission as $value)
-                <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
-                {{ $value->name }}</label>
-            <br/>
-            @endforeach
+            <select class="dualListBox" multiple="multiple" size="10" name="permissions[]" id="permissions">
+                @foreach($permissions as $value)
+                    <option value={{ $value->id }} {{in_array($value->id, $rolePermissions) ? 'selected' : '' }}>{{ $value->name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">

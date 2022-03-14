@@ -1,6 +1,8 @@
 @extends('adminlte::page')
 @section('content')
 @section('plugins.icheckBootstrap', true)
+@section('plugins.bootstrap4DualListbox', true)
+
 @section('breadcrumb')
     {{ Breadcrumbs::render('roles.create') }}
 @stop
@@ -35,28 +37,11 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <table class="table table-sm table-stratch" >
-                <caption><strong>{{ __('roles.label_permissions') }}</strong></caption>
-                <thead>
-                    <tr>
-                        <th>Role</th>
-                        <th>Guard</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($permissions as $value)
-                        <tr>
-                            <td class="icheck-primary">
-                                <div class="icheck-primary icheck-inline">
-                                    {{ Form::checkbox('permission[]', $value->id, false, array('id'=> $value->id)) }}
-                                    {{ Form::label($value->id, $value->name) }}
-                                </div>
-                            </td>
-                            <td>{{ $value->guard_name }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <select class="dualListBox" multiple="multiple" size="10" name="permissions[]" id="permissions">
+                @foreach($permissions as $value)
+                    <option value={{ $value->id }}>{{ $value->name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">

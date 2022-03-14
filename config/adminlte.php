@@ -497,6 +497,11 @@ return [
                     'location' => 'vendor/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js'
                 ],
                 [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/custom/dualListBox.js'
+                ],
+                [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'vendor/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'
