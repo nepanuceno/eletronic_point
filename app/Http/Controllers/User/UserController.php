@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Classes\UserStatusActive;
-use App\Http\Requests\User\UserPostRequest;
-use App\Http\Requests\User\UserUpdatePostRequest;
+use App\Http\Requests\User\UserRequest;
 use App\Repositories\Interfaces\Role\RoleRepositoryInterface;
 use App\Repositories\Interfaces\User\UserRepositoryInterface;
 
@@ -69,16 +68,14 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserPostRequest $request)
+    public function store(UserRequest $request)
     {
         $request->validated();
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
         try {
-            $user = $this->userRepository->createUser($input);
-            $this->userRepository->assignRole($user, $request->input('roles'));
-
+            $this->userRepository->createUser($input);
             activity()->log(__('users.create_user_success'));
             return redirect()->route('users.index')
                 ->with('success', __('users.str-feedback-create-user'));
@@ -86,7 +83,6 @@ class UserController extends Controller
             return view('users.index')->with('error',__('create_user_error').$th->getMessage());
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -114,13 +110,8 @@ class UserController extends Controller
     {
         try {
             $user = $this->userRepository->getUser($id);
-            $roles = $this->roleRepository->getAllRoles();
-            $userRole = $user->roles->pluck('name','name')->all();
-
-            return view('users.edit',compact('user','roles','userRole'));
-            //code...
+            return view('users.edit',compact('user'));
         } catch (\Throwable $th) {
-            //throw $th;
             return view('users.index')->with('error',__('update_user_error').$th->getMessage());
         }
     }
@@ -132,9 +123,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdatePostRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $request->validated();
         $input = $request->all();
         if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
@@ -145,8 +135,6 @@ class UserController extends Controller
         try {
             $user = $this->userRepository->getUser($id);
             $this->userRepository->updateUser($user, $input);
-            $this->roleRepository->destroyModelHasRole($id);
-            $this->userRepository->assignRole($user,$request->input('roles'));
             activity()->log(__('users.edit_user_success'));
 
             return redirect()->route('users.index')

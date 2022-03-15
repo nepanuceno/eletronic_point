@@ -241,11 +241,11 @@ return [
         //     'type' => 'sidebar-menu-search',
         //     'text' => 'search',
         // ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manager',
-        ],
+        // [
+        //     'text' => 'blog',
+        //     'url'  => 'admin/blog',
+        //     'can'  => 'manager',
+        // ],
         // [
         //     'text'        => 'pages',
         //     'url'         => 'admin/pages',
@@ -259,30 +259,16 @@ return [
             'classes'  => 'text-yellow text-bold',
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manager',
-        ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manager',
-        ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manager',
-        ],
-        [
-            'header' => 'administrative_area',
-            'can' => ['role-list'],
-            'classes'  => 'text-yellow text-bold',
-        ],
-        [
             'text' => 'label_users',
             'url'  => '/users',
             'icon' => 'fas fa-fw fa-user',
             'can'   => 'user-list'
+        ],
+        //div-menu
+        [
+            'header' => 'administrative_area',
+            'can' => ['role-list'],
+            'classes'  => 'text-yellow text-bold',
         ],
         [
             'text' => 'label_roles',

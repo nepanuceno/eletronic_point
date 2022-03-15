@@ -33,7 +33,7 @@ class RoleRepository implements RoleRepositoryInterface
         $role = $this->getRole($id);
         $role->name = $inputs->input('name');
         $role->save();
-        $role->syncPermissions($inputs->input('permission'));
+        $role->syncPermissions($inputs->input('permissions'));
     }
 
     public function getRole($id) {

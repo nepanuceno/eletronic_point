@@ -23,8 +23,9 @@ class RoleRequest extends FormRequest
      */
     public function rules()
     {
+        $role_id=$this->role;
         return [
-            'name' => ['required', 'unique:roles', 'string'],
+            'name' => ['required', "unique:roles,id,{$role_id}", 'string'],
             'permissions' => ['required'],
         ];
     }

@@ -50,12 +50,6 @@
             {!! Form::password('confirm-password', array('placeholder' => __('users.label_confirm_password'),'class' => 'form-control')) !!}
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>{{ __('users.label_roles') }}:</strong>
-            {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control select2','multiple')) !!}
-        </div>
-    </div>
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-primary">{{ __('users.user_button_save') }}</button>
     </div>
