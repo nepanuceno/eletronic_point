@@ -46,7 +46,7 @@ class RoleUserController extends Controller
     {
         try {
             $user = $this->user->getUser($request->user);
-            $user->assignRole([$request->roles]);
+            $user->syncRoles([$request->roles]);
             return back()->with('success', __('roles_user.link_successfully_completed').'!');
         } catch (Throwable $e) {
             report($e);
@@ -82,7 +82,17 @@ class RoleUserController extends Controller
     public function roles_user($id)
     {
         $user = $this->user->getUser($id);
-        $roles_user = $user->getRoleNames();
-        return json_encode($roles_user);
+        $roles_user = $user->getRoleNames()->toArray();
+        $all_roles = $this->role->getAllRoles();
+        $select_roles_array=Array();
+
+        foreach($all_roles as $role_id=>$role) {
+            $selected=false;
+            if (in_array($role, $roles_user)) {
+                $selected = true;
+            }
+            array_push($select_roles_array, ['id'=>$role_id, 'role'=>$role, 'selected'=>$selected]);
+        }
+        return json_encode($select_roles_array);
     }
 }

@@ -1,4 +1,4 @@
-var demo1 = $('.dualListBox').bootstrapDualListbox({
+var dualListBox = $('.dualListBox').bootstrapDualListbox({
     nonSelectedListLabel: 'Lista de Permissões',
     selectedListLabel: 'Permissões Selecionandas',
     preserveSelectionOnMove: 'moved',

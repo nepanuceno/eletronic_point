@@ -2,7 +2,7 @@ function confirmeUrlExcludeRoleUserAlert(context, params) {
     Swal.fire({
         title: params[2],
         text: params[3],
-        type: 'warning',
+        icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
