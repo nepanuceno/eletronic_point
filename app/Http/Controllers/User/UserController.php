@@ -24,7 +24,7 @@ class UserController extends Controller
         $this->userRepository = $userInterface;
         $this->roleRepository = $roleInterface;
 
-        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index']]);
         $this->middleware('permission:user-create', ['only' => ['create','store']]);
         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
@@ -83,6 +83,7 @@ class UserController extends Controller
             return view('users.index')->with('error',__('create_user_error').$th->getMessage());
         }
     }
+
 
     /**
      * Display the specified resource.

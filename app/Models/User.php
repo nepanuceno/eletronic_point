@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\UserProfileImage;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -45,7 +46,12 @@ class User extends Authenticatable
 
     public function adminlte_image()
     {
-        return 'https://picsum.photos/300/300';
+        $folderPath = '/storage/images/profiles_users_images/';
+        if($this->getProfilePicture) {
+            return $folderPath.$this->getProfilePicture->name;
+        } else {
+            return '/images/avatar.png';
+        }
     }
 
     public function adminlte_desc()
@@ -56,5 +62,14 @@ class User extends Authenticatable
     public function adminlte_profile_url()
     {
         return 'users/'.$this->id;
+    }
+
+    public function getProfilePicture()
+    {
+        try {
+            return $this->hasOne(UserProfileImage::class, 'user_id');
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 }

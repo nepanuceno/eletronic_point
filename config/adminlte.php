@@ -554,6 +554,21 @@ return [
                 ],
             ]
         ],
+        'cropperJs' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => 'false',
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => 'false',
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.min.css',
+                ],
+            ]
+        ],
     ],
 
     /*

@@ -5,7 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Acl\RoleController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Acl\RoleUserController;
-use App\Http\Controllers\UserProfileImageController;
+use App\Http\Controllers\User\UserProfileImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +31,5 @@ Route::middleware(['auth'])->group(function() {
     Route::get('delete_roles_user/{user}/{role}', [RoleUserController::class, 'delete_roles_user']);
     Route::get('/get_all_users_active', [UserController::class, 'getAllActiveUsers'])->name('get-all-users-active');
 
-    Route::get('crop-image-upload', [UserProfileImageController::class, 'index']);
-    Route::post('crop-image-upload', [UserProfileImageController::class, 'uploadCropImage']);
+    Route::post('/crop-image-upload', [UserProfileImageController::class, 'uploadCropImage']);
 });
