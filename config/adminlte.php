@@ -255,7 +255,7 @@ return [
         // ],
         [
             'header' => 'manager_area',
-            'can' => ['employee-list'],
+            'can' => ['user-list','employee-list'],
             'classes'  => 'text-yellow text-bold',
         ],
         [
@@ -264,7 +264,6 @@ return [
             'icon' => 'fas fa-fw fa-user',
             'can'   => 'user-list'
         ],
-        //div-menu
         [
             'header' => 'administrative_area',
             'can' => ['role-list'],

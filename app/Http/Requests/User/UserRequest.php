@@ -6,6 +6,36 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
 {
+    private function isUserLogged()
+    {
+        if($this->user == auth()->id()) {
+            return true;
+        }
+        return false;
+    }
+
+    private function passwordExistsInRequest()
+    {
+        if (!array_key_exists('password', $this->all())) {
+            return $this->user()->can('user-edit');
+        }
+        return false;
+    }
+
+    private function methodVerify()
+    {
+        switch ($this->method()) {
+            case 'POST':
+                return $this->user()->can('user-create');
+                break;
+            case 'PATCH':
+                return $this->passwordExistsInRequest();
+                break;
+            default:
+                return $this->user()->can('user-list');
+                break;
+        }
+    }
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,27 +43,11 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        // dd($this->method, $this->user);
-        // if($this->user == auth()->id()) {
-        //     return true;
-        // }
-        // else {
-        //     switch ($this->method) {
-        //         case 'POST':
-        //             return $this->user()->can('user-create');
-        //             break;
-        //         case 'PUT':
-        //             return $this->user()->can('user-edit');
-        //             break;
-        //         case 'PATCH':
-        //             return $this->user()->can('user-edit');
-        //             break;
-        //         default:
-        //             return $this->user()->can('user-list');
-        //             break;
-        //     }
-        // }
-        return true;
+        if ($this->isUserLogged()) {
+            return true;
+        } else {
+            return $this->methodVerify();
+        }
     }
 
     /**
@@ -66,7 +80,5 @@ class UserRequest extends FormRequest
             return $rules;
 
         }
-
-
     }
 }

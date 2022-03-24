@@ -4,10 +4,8 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Throw_;
 use App\Mail\WelcomeNewUserMail;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Classes\UserStatusActive;
