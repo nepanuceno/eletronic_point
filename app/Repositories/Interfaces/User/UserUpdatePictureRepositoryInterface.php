@@ -9,5 +9,5 @@ interface UserUpdatePictureRepositoryInterface
      * @param  request
      * @return \Illuminate\Http\Response
      */
-    public function userUpdatePicture($user_id);
+    public function updateUserPicture($user_id);
 }

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Posicione a marcação na imagem</h5>
+                <h5 class="modal-title" id="modalLabel">{{ __('users.label-position-markup-image') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -20,8 +20,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="crop" data-user-id="{{ $user->id }}">Crop</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('app.btn-cancel') }}</button>
+                <button type="button" class="btn btn-primary" id="crop" data-user-id="{{ $user->id }}">{{ __('users.btn-crop') }}</button>
             </div>
         </div>
     </div>

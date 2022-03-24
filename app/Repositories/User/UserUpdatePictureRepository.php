@@ -43,9 +43,9 @@ class UserUpdatePictureRepository implements UserUpdatePictureRepositoryInterfac
         return $folderPath.$imageName;
     }
 
-    private function savePictureName($user_id, $imageName)
+    private function save($user_id, $imageName)
     {
-        UserProfileImage::updateOrCreate(
+        return UserProfileImage::updateOrCreate(
             ['user_id' => $user_id],
             ['name' => $imageName]
         );
@@ -56,7 +56,7 @@ class UserUpdatePictureRepository implements UserUpdatePictureRepositoryInterfac
         unlink($picturePath);
     }
 
-    public function userUpdatePicture($request)
+    public function updateUserPicture($request)
     {
         if ($this->isOwnerPicture($request->user_id)) {
             $folderPath = public_path('storage/images/profiles_users_images/');
@@ -67,7 +67,7 @@ class UserUpdatePictureRepository implements UserUpdatePictureRepositoryInterfac
             try {
                 $user = $this->userInterface->getUser($request->user_id);
                 $user_current_picture = $user->getProfilePicture;
-                $this->savePictureName($request->user_id, $imageName);
+                $this->save($request->user_id, $imageName);
 
                 file_put_contents($imageFullPath, $image_base64);
                 if ($user_current_picture) {
@@ -79,9 +79,9 @@ class UserUpdatePictureRepository implements UserUpdatePictureRepositoryInterfac
                 return response()->json(['status'=>'error', 'message'=> $th->getMessage()]);
             }
 
-            return response()->json(['status'=>'success', 'message'=>'Imagem enviada com sucesso!']);
+            return response()->json(['status'=>'success', 'message'=>__('users.succes_update_image')]);
         } else {
-            return response()->json(['status'=>'error', 'message'=>'Não autorizado!']);
+            return response()->json(['status'=>'error', 'message'=> __('app.unauthorize')]);
         }
     }
 }

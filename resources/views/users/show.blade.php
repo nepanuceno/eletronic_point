@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @section('content')
 @section('plugins.cropperJs', true)
+@section('plugins.Sweetalert2', true)
 
 @section('breadcrumb')
     {{ Breadcrumbs::render('users.show', $user) }}
@@ -102,7 +103,13 @@
                     success: function(data){
                         console.log(data);
                         $modal.modal('hide');
-                        alert(data.message);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: data.status,
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
                     }
                 });
             }

@@ -16,6 +16,6 @@ class UserProfileImageController extends Controller
     }
     public function uploadCropImage(Request $request)
     {
-        return $this->userPictureInterface->userUpdatePicture($request);
+        return $this->userPictureInterface->updateUserPicture($request);
     }
 }

@@ -81,7 +81,6 @@ class UserController extends Controller
     {
         $request->validated();
         $input = $request->all();
-        // $input['password'] = Hash::make($input['password']);
         $passwd = NewUserPasswordCreate::generate();
         $input['password'] = Hash::make($passwd);
 
