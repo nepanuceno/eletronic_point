@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@section('plugins.Sweetalert2', true)
 
 @section('content')
 <div class="container">
@@ -20,4 +21,9 @@
         </div>
     </div>
 </div>
+@endsection
+@section('js')
+    @if ($message = Session::get('success'))
+        <script>MessageAlert(['{{ $message }}', 'success', '{{ __('app.msg_success') }}']);</script>
+    @endif
 @endsection

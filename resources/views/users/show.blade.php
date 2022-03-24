@@ -16,62 +16,25 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-4 mx-auto">
-        <div class="card card-primary card-outline">
-            <div class="card-body box-profile">
-                <div class="text-center">
-                    <img id='profile-user-image' class="profile-user-img img-fluid img-circle" src="{{ $user->adminlte_image() }}" alt="User profile picture">
-                    <input type="file" name="image" id="image-file" class="image d-none d-print-block">
-                </div>
-                <h3 class="profile-username text-center">{{ $user->name }}</h3>
-                <p class="text-muted text-center">{{ $user->email }}</p>
-                <ul class="list-group list-group-unbordered mb-3">
-                    <strong>{{ __('users.label_roles') }}:</strong>
-                    @if(!empty($user->getRoleNames()))
-                        @foreach($user->getRoleNames() as $v)
-                            <li class="list-group-item">
-                                <label class="float-right badge badge-success">{{ $v }}</label>
-                            </li>
-                        @endforeach
-                    @endif
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Posicione a marcação na imagem</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="img-container">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
-                        </div>
-                        <div class="col-md-4">
-                            <div class="preview"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="crop" data-user-id="{{ $user->id }}">Crop</button>
-            </div>
-        </div>
-    </div>
-</div>
+@if (count($errors) > 0)
+  <div class="alert alert-danger">
+    <strong>{{ __('users.whoops') }}</strong> {{ __('users.whoops_text') }}<br><br>
+    <ul>
+       @foreach ($errors->all() as $error)
+         <li>{{ $error }}</li>
+       @endforeach
+    </ul>
+  </div>
+@endif
+
+@include('users.parts.cardUserProfile')
+@include('users.parts.changePasswordModal')
+@include('users.parts.cropPictureUser')
 
 <p class="text-center text-primary"><small>{{ __('app.interprise_name') }}</small></p>
 @endsection
+
 @section('js')
 <script>
     $('#profile-user-image').on('click', function(e) {

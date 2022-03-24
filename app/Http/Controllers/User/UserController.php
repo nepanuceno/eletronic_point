@@ -4,10 +4,15 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Throw_;
+use App\Mail\WelcomeNewUserMail;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Classes\UserStatusActive;
 use App\Http\Requests\User\UserRequest;
+use App\Http\Classes\NewUserPasswordCreate;
 use App\Repositories\Interfaces\Role\RoleRepositoryInterface;
 use App\Repositories\Interfaces\User\UserRepositoryInterface;
 
@@ -19,14 +24,20 @@ class UserController extends Controller
     private $userRepository;
     private $roleRepository;
 
-    public function __construct(UserRepositoryInterface $userInterface, RoleRepositoryInterface $roleInterface)
+    public function __construct(Request $request, UserRepositoryInterface $userInterface, RoleRepositoryInterface $roleInterface)
     {
         $this->userRepository = $userInterface;
         $this->roleRepository = $roleInterface;
 
+        $this->middleware(function ($request, $next) {
+            if ((integer) $request->user != auth()->id()) {
+                $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+            }
+            return $next($request);
+        });
+
         $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index']]);
         $this->middleware('permission:user-create', ['only' => ['create','store']]);
-        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
@@ -72,18 +83,27 @@ class UserController extends Controller
     {
         $request->validated();
         $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
+        // $input['password'] = Hash::make($input['password']);
+        $passwd = NewUserPasswordCreate::generate();
+        $input['password'] = Hash::make($passwd);
 
         try {
-            $this->userRepository->createUser($input);
+            $new_user = $this->userRepository->createUser($input);
+            $details = [
+                'name' => $new_user->name,
+                'passwd' => $passwd,
+                'email' => $new_user->email
+            ];
+
             activity()->log(__('users.create_user_success'));
+            Mail::to($new_user->email)->send(new WelcomeNewUserMail($details));
             return redirect()->route('users.index')
                 ->with('success', __('users.str-feedback-create-user'));
         } catch (\Throwable $th) {
-            return view('users.index')->with('error',__('create_user_error').$th->getMessage());
+            throw $th;
+            return redirect()->back()->with('error',__('create_user_error').$th->getMessage());
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -138,8 +158,13 @@ class UserController extends Controller
             $this->userRepository->updateUser($user, $input);
             activity()->log(__('users.edit_user_success'));
 
-            return redirect()->route('users.index')
+            if ($user->can('user.list')) {
+                return redirect()->route('users.index')
+                    ->with('success',__('users.str-feedback-update-user'));
+            } else {
+                return redirect()->route('home')
                 ->with('success',__('users.str-feedback-update-user'));
+            }
         } catch (\Throwable $th) {
             return view('users.index')->with('error',__('update_user_error').$th->getMessage());
         }

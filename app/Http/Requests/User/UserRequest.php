@@ -13,17 +13,27 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        switch ($this->method) {
-            case 'POST':
-                return $this->user()->can('user-create');
-                break;
-            case 'PUT':
-                return $this->user()->can('user-edit');
-                break;
-            default:
-                return $this->user()->can('user-list');
-                break;
-        }
+        // dd($this->method, $this->user);
+        // if($this->user == auth()->id()) {
+        //     return true;
+        // }
+        // else {
+        //     switch ($this->method) {
+        //         case 'POST':
+        //             return $this->user()->can('user-create');
+        //             break;
+        //         case 'PUT':
+        //             return $this->user()->can('user-edit');
+        //             break;
+        //         case 'PATCH':
+        //             return $this->user()->can('user-edit');
+        //             break;
+        //         default:
+        //             return $this->user()->can('user-list');
+        //             break;
+        //     }
+        // }
+        return true;
     }
 
     /**
@@ -33,22 +43,30 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        $user_id = $this->user ?? '';
-        $rules = [
-            'name' => ['required', 'string'],
-            'email' => [
-                'required',
-                'email',
-                "unique:users,email,{$user_id},id"
-            ],
-            'password' => [
-                'required',
-                'same:confirm-password'
-            ]
-        ];
+        if (array_key_exists('password', $this->all())) {
+            $rules = [
+                'password' => [
+                    'required',
+                    'same:confirm-password'
+                ]
+            ];
+            return $rules;
 
-        $rules['password']=['nullable', 'min:6'];
+            // $rules['password']=['nullable', 'min:6'];
+        } else {
+            $user_id = $this->user ?? '';
+            $rules = [
+                'name' => ['required', 'string'],
+                'email' => [
+                    'required',
+                    'email',
+                    "unique:users,email,{$user_id},id"
+                ]
+            ];
+            return $rules;
 
-        return $rules;
+        }
+
+
     }
 }

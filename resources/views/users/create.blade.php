@@ -38,7 +38,7 @@
             {!! Form::text('email', null, array('placeholder' =>  __('users.label_email'),'class' => 'form-control')) !!}
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
+    {{-- <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>{{ __('users.label_password') }}:</strong>
             {!! Form::password('password', array('placeholder' => __('users.label_password'),'class' => 'form-control')) !!}
@@ -49,7 +49,7 @@
             <strong>{{ __('users.label_confirm_password') }}:</strong>
             {!! Form::password('confirm-password', array('placeholder' =>  __('users.label_confirm_password'),'class' => 'form-control')) !!}
         </div>
-    </div>
+    </div> --}}
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-primary">{{ __('users.user_button_save') }}</button>
     </div>
