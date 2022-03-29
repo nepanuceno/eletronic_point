@@ -37,6 +37,7 @@ class UserController extends Controller
         $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index']]);
         $this->middleware('permission:user-create', ['only' => ['create','store']]);
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+
     }
 
     /**

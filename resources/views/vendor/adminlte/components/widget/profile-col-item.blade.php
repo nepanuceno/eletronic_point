@@ -4,7 +4,11 @@
 
         {{-- Icon --}}
         @isset($icon)
-            <i class="{{ $icon }}"></i>
+            @isset($href)
+                <a href="{{ $href }}"><i class="{{ $icon }}"></i></a>
+            @else
+                <i class="{{ $icon }}"></i>
+            @endisset
         @endisset
 
         {{-- Header --}}
