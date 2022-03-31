@@ -19,6 +19,7 @@ interface UserRepositoryInterface
      */
     public function getAllUsers($pagination, $user_status_active);
     public function getUser($user_id);
+    public function getUserLogged();
     public function createUser($request);
     public function updateUser($user, $request);
     public function editUser($user_id);

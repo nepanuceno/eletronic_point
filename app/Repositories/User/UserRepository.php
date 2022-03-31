@@ -26,6 +26,11 @@ class UserRepository implements UserRepositoryInterface
         return User::find($user_id);
     }
 
+    public function getUserLogged() {
+        return Auth::user();
+    }
+
+
     public function createUser($request) {
         return User::create($request);
     }
