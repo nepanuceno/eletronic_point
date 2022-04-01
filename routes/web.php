@@ -7,7 +7,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Acl\RoleController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Acl\RoleUserController;
+use App\Http\Controllers\DepartamentController;
 use App\Http\Controllers\User\UserProfileImageController;
+use App\Models\Departament;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,8 +34,8 @@ Route::middleware(['auth'])->group(function() {
     Route::get('delete_roles_user/{user}/{role}', [RoleUserController::class, 'delete_roles_user']);
     Route::get('/get_all_users_active', [UserController::class, 'getAllActiveUsers'])->name('get-all-users-active');
 
+    Route::resource('departaments', DepartamentController::class);
     Route::post('/crop-image-upload', [UserProfileImageController::class, 'uploadCropImage']);
-
 });
 
 Route::get('/confirm-password', function () {

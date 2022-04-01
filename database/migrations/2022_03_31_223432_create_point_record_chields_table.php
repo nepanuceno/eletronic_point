@@ -15,7 +15,7 @@ class CreatePointRecordChieldsTable extends Migration
     {
         Schema::create('point_record_chields', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id');
+            $table->unsignedBigInteger('point_id');
             $table->date('time_record');
             $table->timestamps();
 

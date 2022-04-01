@@ -259,9 +259,27 @@ return [
             'classes'  => 'text-yellow text-bold',
         ],
         [
+            'text' => 'label_responsibility',
+            'url'  => '/resposibilities',
+            'icon' => 'fas fa-fw fa-briefcase',
+            'can'   => 'departament-list'
+        ],
+        [
+            'text' => 'label_departament',
+            'url'  => '/departaments',
+            'icon' => 'fas fa-fw fa-sitemap',
+            'can'   => 'departament-list'
+        ],
+        [
+            'text' => 'label_employee',
+            'url'  => '/employees',
+            'icon' => 'fas fa-fw fa-user-friends',
+            'can'   => 'departament-list'
+        ],
+        [
             'text' => 'label_users',
             'url'  => '/users',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-users',
             'can'   => 'user-list'
         ],
         [

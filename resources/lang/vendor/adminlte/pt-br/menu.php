@@ -19,6 +19,9 @@ return [
     'administrative_area'           => 'Área Administrativa',
     'label_users'                   => 'Usuários',
     'label_roles'                   => 'Perfis',
-    'manager_area'                  =>  'Área do Gerente',
-    'user_role'                     =>  'Perfis por Usuário',
+    'manager_area'                  => 'Área do Gerente',
+    'user_role'                     => 'Perfis por Usuário',
+    'label_departament'             => 'Departamentos',
+    'label_responsibility'          => 'Cargos',
+    'label_employee'                => 'Servidores'
 ];

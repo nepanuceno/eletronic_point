@@ -67,3 +67,21 @@ Breadcrumbs::for('role_user.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Perfis por Usuário', route('role_user.index'));
 });
+
+// Home > [Departaments]
+Breadcrumbs::for('departaments.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Departamentos', route('departaments.index'));
+});
+Breadcrumbs::for('departaments.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('departaments.index');
+    $trail->push('Novo Departamento', route('departaments.create'));
+});
+Breadcrumbs::for('departaments.edit', function (BreadcrumbTrail $trail, $departament) {
+    $trail->parent('departaments.index');
+    $trail->push('Aditar Departamento', route('departaments.edit', $departament->id));
+});
+Breadcrumbs::for('departaments.show', function (BreadcrumbTrail $trail, $departament) {
+    $trail->parent('departaments.index');
+    $trail->push('Detalhes do Departamento', route('departaments.edit', $departament->id));
+});

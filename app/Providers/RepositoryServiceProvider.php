@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Departament;
+use App\Repositories\Departament\DepartamentRepository;
+use App\Repositories\Interfaces\Departament\DepartamentRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Role\RoleRepository;
 use App\Repositories\User\UserRepository;
@@ -25,6 +28,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
         $this->app->bind(PermissionRepositoryInterface::class, PermissionRepository::class);
         $this->app->bind(UserUpdatePictureRepositoryInterface::class, UserUpdatePictureRepository::class);
+        $this->app->bind(DepartamentRepositoryInterface::class, DepartamentRepository::class);
+
+        $this->app->bind(DepartamentRepositoryInterface::class, function(){
+            return new DepartamentRepository(new Departament());
+        });
     }
 
 
