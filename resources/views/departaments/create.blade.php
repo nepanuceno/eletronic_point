@@ -1,7 +1,8 @@
 @extends('adminlte::page')
 
 @section('title', 'Dashboard')
-
+@section('plugins.Select2', true)
+@section('plugins.Sweetalert2', true)
 @section('content_header')
     <h1>Cadastro de Departamentos</h1>
 @stop
@@ -52,7 +53,7 @@
                 <div class="form-group">
                     <div class="input-form">
                         <label class="form-label" for="departament">Departamento pai</label>
-                        <select class="form-control select2" name="parent">
+                        <select class="form-control select2" name="parent_id">
                             <option value="">Nenhum</option>
                             @foreach ($departaments as $item)
                                 <option value="{{ $item->id }}"

@@ -8,15 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 class DepartamentService
 {
     protected $departament;
+    private $status;
 
     public function __construct(DepartamentRepositoryInterface $departamentRepositoryInterface)
     {
         $this->departament = $departamentRepositoryInterface;
     }
 
-    public function list()
+    public function list($request=null)
     {
-        return $this->departament->listDepartaments();
+        if (!isset($request->status) || $request->status==1) {
+            $this->setStatusActive(0);
+            return $this->departament->listDepartaments();
+        }
+        else if ($request->status == 0) {
+            $this->setStatusActive(1);
+            return $this->departament->listDeactivatedDepartments();
+        }
+    }
+
+    public function setStatusActive($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatusActive()
+    {
+        return $this->status;
     }
 
     public function get($id)
@@ -39,15 +57,20 @@ class DepartamentService
         return $this->departament->deleteDepartament($id);
     }
 
+    public function restore($id)
+    {
+        return $this->departament->restoreDepartament($id);
+    }
+
     public function rootDepartament()
     {
         return $this->departament->rootDepartament();
     }
 
-    public function output($projects, $departament)
+    public function output($descendents, $departament)
     {
         $string = "<ul>";
-        foreach ($projects as $i => $project) {
+        foreach ($descendents as $i => $project) {
             $string .= "<li>";
             if($departament->id == $project->id) {
                 $string .= "<code class='color'>".$project['name']."</code>";

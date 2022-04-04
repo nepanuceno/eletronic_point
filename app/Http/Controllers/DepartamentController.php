@@ -18,10 +18,11 @@ class DepartamentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $departaments = $this->service->list();
-        return view('departaments.index', compact('departaments'));
+        $departaments = $this->service->list($request);
+        $status = $this->service->getStatusActive();
+        return view('departaments.index', compact('departaments','status'));
     }
 
     /**
@@ -86,16 +87,35 @@ class DepartamentController extends Controller
     public function update(Request $request, $id)
     {
         $this->service->update($request->all(), $id);
+        return redirect()->route('departaments.index')
+            ->with('success', "Departamento alterado com sucesso!");
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Disable the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        return $this->service->delete($id);
+        $this->service->delete($id);
+        return redirect()->route('departaments.index')
+        ->with('success', "Departamento desativado com sucesso!");
     }
+
+     /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $this->service->restore($id);
+        return redirect()->route('departaments.index')
+        ->with('success', "Departamento restaurado com sucesso!");
+    }
+
+
 }

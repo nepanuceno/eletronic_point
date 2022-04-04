@@ -19,6 +19,11 @@ class DepartamentRepository implements DepartamentRepositoryInterface
         return $this->model->paginate(15);
     }
 
+    public function listDeactivatedDepartments()
+    {
+        return$this->model->onlyTrashed()->paginate(15);
+    }
+
     public function getDepartament($id)
     {
         return $this->model->find($id);
@@ -37,6 +42,11 @@ class DepartamentRepository implements DepartamentRepositoryInterface
     public function deleteDepartament($id)
     {
         return $this->model->find($id)->delete();
+    }
+
+    public function restoreDepartament($id)
+    {
+        return $this->model->withTrashed()->find($id)->restore();
     }
 
     public function rootDepartament()

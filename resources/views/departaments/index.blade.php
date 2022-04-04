@@ -1,9 +1,10 @@
 @extends('adminlte::page')
+@section('plugins.Sweetalert2', true)
 
 @section('title', 'Departamentos')
 
 @section('content_header')
-    <h1>Departamentos</h1>
+    <h1>Departamentos {{ $status==1?' Desativados':'' }}</h1>
 @stop
 @section('breadcrumb')
     {{ Breadcrumbs::render('departaments.index') }}
@@ -26,16 +27,9 @@
                 <a class="btn btn-secondary mb-4 float-right" href="{{ route('departaments.create') }}">
                     <span class="fas fa-plus mr-1"></span>Novo
                 </a>
-
-                @if (session('departaments_inactives') == 1)
-                    <a class="btn btn-warning mb-4 float-left" href="{{ route('departaments.index', ['status' => null]) }}">
-                        <span class="fas fa-eye mr-1"></span>Mostrar Somente Ativos
-                    </a>
-                @else
-                    <a class="btn btn-secondary mb-4 float-left" href="{{ route('departaments.index', ['status' => 1]) }}">
-                        <span class="fas fa-eye mr-1"></span>Mostrar Inativos
-                    </a>
-                @endcan
+                <a class="btn btn-secondary mb-4 float-left" href="{{ route('departaments.index', ['status' => $status]) }}">
+                    <span class="fas fa-eye mr-1"></span> {{ $status ? 'Mostrar Ativos':'Mostrar Inativos' }}
+                </a>
         </div>
     </div>
 @endcan
@@ -56,7 +50,6 @@
                         <tr class="{{ $departament->status==0?'table-danger':''}}">
                             <td style="width: 78%">{{ $departament->name }}</td>
                             @can(['servidor-edit', 'servidor-delete'])
-
                                 <td>
                                     <div class="btn-group float-right">
                                         <button type="button" class="btn btn-default">Ações</button>
@@ -66,16 +59,24 @@
                                         </button>
                                         <div class="dropdown-menu" role="menu" style="">
                                             @can('servidor-edit')
-                                                <form action="{{ url('departaments/' . $departament->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    {{-- <input type="hidden" name="departament_id" value="{{ $departament->id }}"/> --}}
-                                                    <button class="dropdown-item disable"
-                                                        data-active="{{ $departament->status == 1 ? 'Desativar' : 'Reativar' }}"><i
-                                                            class="fas fa-trash"></i>
-                                                        {{ $departament->status == 1 ? 'Desativar' : 'Reativar' }}
-                                                    </button>
-                                                </form>
+                                                {!! Form::open(['method' => 'DELETE','route' => [
+                                                        $status==0?'departaments.destroy':'departament.restore', $departament->id],
+                                                        'style'=>'display:inline'
+                                                    ]) !!}
+                                                {!! Form::button("<i class=\"fas fa-trash\"></i> ".
+                                                   ( ($departament->deleted_at)===NULL ? __('users.user_button_disable'):__('users.user_button_enable')),
+                                                    [
+                                                        'type'=>'submit',
+                                                        'type-icon' => 'question',
+                                                        'data-title'=> ($departament->deleted_at===NULL ? __('users.user_button_disable'): __('users.user_button_enable')).' '.$departament->name.'?',
+                                                        'class' => 'dropdown-item disable-button',
+                                                        'type'=>'submit',
+                                                        'data-text'=> __('users.ara-you-sure'),
+                                                        'confirm-button-text'=>__('users.btn-yes'),
+                                                        'cancel-button-text'=>__('users.btn-not'),
+                                                    ]
+                                                    ) !!}
+                                                {!! Form::close() !!}
                                             @endcan
                                             @can('servidor-edit')
                                                 <a class="dropdown-item" href="departaments/{{ $departament->id }}/edit">
@@ -100,32 +101,4 @@
 @else
     <div class="alert alert-info">Não existem departamentos cadastrados</div>
 @endif
-@stop
-
-@section('js')
-<script>
-    var a = document.querySelectorAll('.disable')
-    a.forEach(element => {
-        element.addEventListener('click', function disable(e) {
-            console.log(this.parentElement)
-            e.preventDefault()
-
-            Swal.fire({
-                title: 'Confirma?',
-                text: "Está ação poderá ser revertida",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, desativar!'
-            }).then((result) => {
-                if (result.value) {
-                    this.parentElement.submit()
-                } else {
-                    return false
-                }
-            })
-        })
-    });
-</script>
 @stop

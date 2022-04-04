@@ -7,9 +7,11 @@ interface DepartamentRepositoryInterface
 {
     public function __construct(Model $model);
     public function listDepartaments();
+    public function listDeactivatedDepartments();
     public function getDepartament($id);
     public function createDepartament(array $inputs);
     public function updateDepartament(array $inputs, $id);
     public function deleteDepartament($id);
+    public function restoreDepartament($id);
     public function rootDepartament();
 }

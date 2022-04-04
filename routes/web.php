@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/get_all_users_active', [UserController::class, 'getAllActiveUsers'])->name('get-all-users-active');
 
     Route::resource('departaments', DepartamentController::class);
+    Route::delete('/departaments/{id}/restore', [DepartamentController::class, 'restore'])->name('departament.restore');
     Route::post('/crop-image-upload', [UserProfileImageController::class, 'uploadCropImage']);
 });
 
