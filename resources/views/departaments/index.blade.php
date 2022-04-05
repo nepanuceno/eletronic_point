@@ -10,11 +10,6 @@
     {{ Breadcrumbs::render('departaments.index') }}
 @stop
 @section('content')
-    @if (session('success'))
-        <div class="alert alert-success alert-dismiss">
-            {{ session('success') }}
-        </div>
-    @endif
     @if (session('danger'))
         <div class="alert alert-danger">
             {{ session('danger') }}
@@ -71,7 +66,7 @@
                                                         'data-title'=> ($departament->deleted_at===NULL ? __('users.user_button_disable'): __('users.user_button_enable')).' '.$departament->name.'?',
                                                         'class' => 'dropdown-item disable-button',
                                                         'type'=>'submit',
-                                                        'data-text'=> __('users.ara-you-sure'),
+                                                        'data-text'=> __('users.are-you-sure'),
                                                         'confirm-button-text'=>__('users.btn-yes'),
                                                         'cancel-button-text'=>__('users.btn-not'),
                                                     ]
@@ -101,4 +96,7 @@
 @else
     <div class="alert alert-info">Não existem departamentos cadastrados</div>
 @endif
+@stop
+@section('js')
+    @alertSuccess(Session::get('success'));
 @stop
