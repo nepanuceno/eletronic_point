@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Departament\DepartametRequest;
 use App\Services\DepartamentService;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,7 @@ class DepartamentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DepartametRequest $request)
     {
         $this->service->store($request->all());
         return redirect()->back()->with('success','Departamento cadastrado com sucesso!');
@@ -84,7 +85,7 @@ class DepartamentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DepartametRequest $request, $id)
     {
         $this->service->update($request->all(), $id);
         return redirect()->route('departaments.index')
@@ -116,6 +117,4 @@ class DepartamentController extends Controller
         return redirect()->route('departaments.index')
         ->with('success', "Departamento restaurado com sucesso!");
     }
-
-
 }
