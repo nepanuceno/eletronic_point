@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Cargos')
+@section('title', __('responsibility.label_responsibility'))
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('positions.index') }}
+    {{ Breadcrumbs::render('responsibilities.index') }}
 @stop
 
 @section('content_header')
-<h1>Cargos</h1>
+<h1>{{ __('responsibility.label_responsibility') }}</h1>
 @stop
 
 @section('content')
@@ -36,39 +36,39 @@
     <div class="row">
         <div class="col">
             <div class="float-right mb-4">
-                <a class="btn btn-secondary" href="{{ route('positions.create') }}">
-                    <span class="fas fa-plus mr-1"></span>Novo
+                <a class="btn btn-secondary" href="{{ route('responsibilities.create') }}">
+                    <span class="fas fa-plus mr-1"></span>{{ __('app.btn-new') }}
                 </a>
             </div>
         </div>
     </div>
 @endcan
 
-@if (count($positions) > 0)
+@if (count($responsibilities) > 0)
     <div class="card">
         <div class="card-body table-responsive p-0">
             <table class="table table-bordered table-sm table-striped table-hover table-valign-middle">
                 <thead class="thead-dark ">
                     <tr>
-                        <th>Cargos</th>
+                        <th>{{ __('responsibility.label_responsibility') }}</th>
                         @can('servidor-edit')
-                            <th class="text-center">Ações</th>
+                            <th class="text-center">{{ __('app.label-actions') }}</th>
                         @endcan
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($positions as $position)
+                    @foreach ($responsibilities as $position)
                         <tr>
                             <td style="width: 90%">{{ $position->name }}</td>
                             @can('servidor-edit')
                                 <td>
-                                    {{-- <form action="{{ url('positions/'. $position->id ) }}" method="POST">
+                                    {{-- <form action="{{ url('responsibilities/'. $position->id ) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-app float-right disable"><i class="fas fa-trash"></i> Excluir</button>
                                 </form> --}}
-                                    <a class="btn btn-app float-right" href="positions/{{ $position->id }}/edit">
-                                        <i class="fas fa-edit"></i> Editar</a>
+                                    <a class="btn btn-app float-right" href="responsibilities/{{ $position->id }}/edit">
+                                        <i class="fas fa-edit"></i> {{ __('app.btn-edit') }}</a>
                                 </td>
                             @endcan
                         </tr>
@@ -76,7 +76,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $positions->links() }}
+        {{ $responsibilities->links() }}
     </div>
 @else
     <div class="alert alert-info d-flex align-items-center" role="alert">
@@ -84,36 +84,12 @@
             <use xlink:href="#info-fill" />
         </svg>
         <div class="ml-2">
-            Não existem cargos cadastrados!
+            {{ __('responsibility.no-positions-registered') }}
         </div>
     </div>
 @endif
 @stop
 
 @section('js')
-<script>
-    var a = document.querySelectorAll('.disable')
-    a.forEach(element => {
-        element.addEventListener('click', function disable(e) {
-            console.log(this.parentElement)
-            e.preventDefault()
 
-            Swal.fire({
-                title: 'Confirma?',
-                text: "Esta ação poderá ser revertida",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, desativar!'
-            }).then((result) => {
-                if (result.value) {
-                    this.parentElement.submit()
-                } else {
-                    return false
-                }
-            })
-        })
-    });
-</script>
 @stop

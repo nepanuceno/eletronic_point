@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     @if (isset($position))
-        {{ Breadcrumbs::render('positions.edit', $position) }}
+        {{ Breadcrumbs::render('responsibilities.edit', $position) }}
     @else
-        {{ Breadcrumbs::render('positions.create') }}
+        {{ Breadcrumbs::render('responsibilities.create') }}
     @endif
 @stop
 
@@ -46,7 +46,7 @@
         </div>
     @endif --}}
     <div class="card card-info">
-        <form action="{{ isset($position) ? url('positions/' . $position->id) : url('positions') }}" method="POST">
+        <form action="{{ isset($position) ? url('responsibilities/' . $position->id) : url('responsibilities') }}" method="POST">
             <div class="card-body">
                 @csrf
                 @if (isset($position))
@@ -55,7 +55,7 @@
 
                 <div class="form-group">
                     <div class="input-form">
-                        <label class="form-label" for="name">Cargo</label>
+                        <label class="form-label" for="name">{{ __('App.label-name') }}</label>
                         <input class="form-control" name="name" id="name"
                             value="{{ isset($position) ? $position->name : '' }}" />
                     </div>
@@ -63,9 +63,9 @@
             </div>
             <div class="card-footer">
                 <button class="btn btn-primary" type="submit"><i
-                        class="fas fa-save mr-1"></i>{{ isset($position) ? 'Salvar' : 'Cadastrar' }}</button>
-                <a class="btn btn-secondary float-right" href="{{ route('positions.index') }}"><i
-                        class="fas fa-arrow-left mr-1"></i>Voltar</a>
+                        class="fas fa-save mr-1"></i>{{ isset($position) ? 'Salvar' : __('app.btn-register') }}</button>
+                <a class="btn btn-secondary float-right" href="{{ route('responsibilities.index') }}"><i
+                        class="fas fa-arrow-left mr-1"></i>{{ __('app.btn-back') }}</a>
             </div>
         </form>
     </div>

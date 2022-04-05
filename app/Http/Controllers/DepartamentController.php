@@ -14,6 +14,7 @@ class DepartamentController extends Controller
     {
         $this->service = $service;
     }
+
     /**
      * Display a listing of the resource.
      *

@@ -260,7 +260,7 @@ return [
         ],
         [
             'text' => 'label_responsibility',
-            'url'  => '/resposibilities',
+            'url'  => '/responsibilities',
             'icon' => 'fas fa-fw fa-briefcase',
             'can'   => 'departament-list'
         ],

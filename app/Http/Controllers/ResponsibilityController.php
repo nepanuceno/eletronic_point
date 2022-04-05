@@ -3,9 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\ResponsibilityService;
 
 class ResponsibilityController extends Controller
 {
+    private $service;
+
+    public function __construct(ResponsibilityService $service)
+    {
+        $this->service = $service;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +22,8 @@ class ResponsibilityController extends Controller
      */
     public function index()
     {
-        //
+        $responsibilities = $this->service->listResponsibilities();
+        return view('responsibilities.index', compact('responsibilities'));
     }
 
     /**
@@ -23,7 +33,7 @@ class ResponsibilityController extends Controller
      */
     public function create()
     {
-        //
+        return view('responsibilities.create');
     }
 
     /**

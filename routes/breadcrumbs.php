@@ -85,3 +85,14 @@ Breadcrumbs::for('departaments.show', function (BreadcrumbTrail $trail, $departa
     $trail->parent('departaments.index');
     $trail->push('Detalhes do Departamento', route('departaments.edit', $departament->id));
 });
+
+// Home -> [Responsibility]
+Breadcrumbs::for('responsibilities.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('responsibility.label_responsibility'), route('responsibilities.index'));
+});
+
+Breadcrumbs::for('responsibilities.create', function ($trail) {
+    $trail->parent('responsibilities.index');
+    $trail->push(__('responsibility.create-responsibility'), route('responsibilities.create'));
+});

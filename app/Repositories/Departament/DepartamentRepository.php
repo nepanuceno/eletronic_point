@@ -1,7 +1,6 @@
 <?php
 namespace App\Repositories\Departament;
 
-use App\Models\Departament;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Interfaces\Departament\DepartamentRepositoryInterface;
 

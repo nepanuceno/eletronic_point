@@ -6,6 +6,15 @@ return [
     'msg_warning'    =>  'Atenção!',
     'access_forbidden' => 'Não desta vez, acesso proibido!',
     'unauthorize'   =>  'Não autorizado',
+    'btn-new'    =>  'Novo',
+    'btn-register' => 'Cadastrar',
+    'btn-save'  => 'Salvar',
+    'btn-edit'    =>  'Editar',
+    'btn-corfirm'    =>  'Confirmar',
+    'btn-disable'    =>  'Desabilitar',
     'btn-cancel'    =>  'Cancelar',
-    'btn-confirm-change'    =>  'Confirmar Alteração'
+    'btn-back'  =>  'Voltar',
+    'btn-confirm-change'    =>  'Confirmar Alteração',
+    'label-actions' => 'Ações',
+    'label-name'    => 'Nome'
 ];
