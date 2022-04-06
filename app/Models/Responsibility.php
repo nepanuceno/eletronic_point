@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Responsibility extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = ['name'];
 }

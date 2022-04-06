@@ -25,12 +25,12 @@ class ResponsibilityService
         return $this->responsibility->updateResponsibility($inputs, $id);
     }
 
-    public function showResponsibility($id)
+    public function getResponsibility($id)
     {
         return $this->responsibility->showResponsibility($id);
     }
 
-    public function destroy($id)
+    public function destroyResponsibility($id)
     {
         return $this->responsibility->destroy($id);
     }

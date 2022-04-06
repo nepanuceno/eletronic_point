@@ -3,8 +3,8 @@
 @section('title', 'Cargo')
 
 @section('breadcrumb')
-    @if (isset($position))
-        {{ Breadcrumbs::render('responsibilities.edit', $position) }}
+    @if (isset($responsibility))
+        {{ Breadcrumbs::render('responsibilities.edit', $responsibility) }}
     @else
         {{ Breadcrumbs::render('responsibilities.create') }}
     @endif
@@ -46,10 +46,10 @@
         </div>
     @endif --}}
     <div class="card card-info">
-        <form action="{{ isset($position) ? url('responsibilities/' . $position->id) : url('responsibilities') }}" method="POST">
+        <form action="{{ isset($responsibility) ? url('responsibilities/' . $responsibility->id) : url('responsibilities') }}" method="POST">
             <div class="card-body">
                 @csrf
-                @if (isset($position))
+                @if (isset($responsibility))
                     @method('PUT')
                 @endif
 
@@ -57,23 +57,16 @@
                     <div class="input-form">
                         <label class="form-label" for="name">{{ __('App.label-name') }}</label>
                         <input class="form-control" name="name" id="name"
-                            value="{{ isset($position) ? $position->name : '' }}" />
+                            value="{{ isset($responsibility) ? $responsibility->name : '' }}" />
                     </div>
                 </div>
             </div>
             <div class="card-footer">
                 <button class="btn btn-primary" type="submit"><i
-                        class="fas fa-save mr-1"></i>{{ isset($position) ? 'Salvar' : __('app.btn-register') }}</button>
+                        class="fas fa-save mr-1"></i>{{ isset($responsibility) ? 'Salvar' : __('app.btn-register') }}</button>
                 <a class="btn btn-secondary float-right" href="{{ route('responsibilities.index') }}"><i
                         class="fas fa-arrow-left mr-1"></i>{{ __('app.btn-back') }}</a>
             </div>
         </form>
     </div>
-@stop
-@section('js')
-    <script>
-        $('.select2').select2({
-            placeholder: 'Select an option'
-        });
-    </script>
 @stop

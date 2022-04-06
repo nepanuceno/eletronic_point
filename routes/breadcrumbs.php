@@ -96,3 +96,8 @@ Breadcrumbs::for('responsibilities.create', function ($trail) {
     $trail->parent('responsibilities.index');
     $trail->push(__('responsibility.create-responsibility'), route('responsibilities.create'));
 });
+
+Breadcrumbs::for('responsibilities.edit', function ($trail, $responsibility) {
+    $trail->parent('responsibilities.index');
+    $trail->push(__('responsibility.edit-responsibility'), route('responsibilities.edit', $responsibility->id));
+});

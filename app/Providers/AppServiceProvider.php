@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Components\AlertSuccess;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -28,16 +29,23 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         Blade::directive('alertSuccess', function ($message) {
-            $result = "if ($message) {
-                    <script>MessageAlert(['$message', 'success', ". __('app.msg_success')."]);</script>
-                }";
+            $result="<script>
+                        MessageAlert(['$message', 'success', '". __('app.msg_success')."'])
+                    </script>";
             return $result;
         });
 
-        Blade::directive('alertDanger', function ($message) {
-            $result = "if ($message) {
-                    <script>MessageAlert(['$message', 'error', ". __('app.msg_error')."]);</script>
-                }";
+        Blade::directive('alertError', function ($message) {
+            $result = "<script>
+                        MessageAlert(['$message', 'error', '". __('app.msg_error')."'])
+                    </script>";
+            return $result;
+        });
+
+        Blade::directive('alertInfo', function ($message) {
+            $result = "<script>
+                        MessageAlert(['$message', 'info', '". __('app.msg_error')."'])
+                    </script>";
             return $result;
         });
     }

@@ -14,7 +14,6 @@ class ResponsibilityController extends Controller
         $this->service = $service;
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -44,7 +43,8 @@ class ResponsibilityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->service->createResponsibility($request->all());
+        return redirect()->route('responsibilities.index')->with('success', __('responsibility.success_create_responsibility'));
     }
 
     /**
@@ -55,7 +55,8 @@ class ResponsibilityController extends Controller
      */
     public function show($id)
     {
-        //
+        $responsibility = $this->service->getResponsibility($id);
+        return view('responsibilities.show');
     }
 
     /**
@@ -66,7 +67,8 @@ class ResponsibilityController extends Controller
      */
     public function edit($id)
     {
-        //
+        $responsibility = $this->service->getResponsibility($id);
+        return view('responsibilities.create', compact('responsibility'));
     }
 
     /**
@@ -78,7 +80,9 @@ class ResponsibilityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->service->updateResponsibility($request->all(), $id);
+
+        return redirect()->route('responsibilities.index')->with('success', __('responsibility.success_edit_responsibility'));
     }
 
     /**
@@ -89,6 +93,6 @@ class ResponsibilityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->service->destroyResponsibility($id);
     }
 }

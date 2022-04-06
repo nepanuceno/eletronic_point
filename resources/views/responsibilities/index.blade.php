@@ -2,94 +2,89 @@
 
 @section('title', __('responsibility.label_responsibility'))
 
+@section('plugins.Sweetalert2', true)
+
 @section('breadcrumb')
     {{ Breadcrumbs::render('responsibilities.index') }}
 @stop
 
 @section('content_header')
-<h1>{{ __('responsibility.label_responsibility') }}</h1>
+    <h1>{{ __('responsibility.label_responsibility') }}</h1>
 @stop
 
 @section('content')
-@if (session('success'))
-    <div class="alert alert-success alert-dismiss d-flex align-items-center" role="alert">
-        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
-            <use xlink:href="#check-circle-fill" />
-        </svg>
-        <div class="ml-2">
-            {{ session('success') }}
-        </div>
-    </div>
-@endif
-@if (session('danger'))
-    <div class="alert alert-danger d-flex align-items-center" role="alert">
-        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-            <use xlink:href="#exclamation-triangle-fill" />
-        </svg>
-        <div class="ml-2">
-            {{ session('danger') }}
-        </div>
-    </div>
-@endif
-
-@can('servidor-create')
-    <div class="row">
-        <div class="col">
-            <div class="float-right mb-4">
-                <a class="btn btn-secondary" href="{{ route('responsibilities.create') }}">
-                    <span class="fas fa-plus mr-1"></span>{{ __('app.btn-new') }}
-                </a>
+    @if (session('danger'))
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                <use xlink:href="#exclamation-triangle-fill" />
+            </svg>
+            <div class="ml-2">
+                {{ session('danger') }}
             </div>
         </div>
-    </div>
-@endcan
+    @endif
 
-@if (count($responsibilities) > 0)
-    <div class="card">
-        <div class="card-body table-responsive p-0">
-            <table class="table table-bordered table-sm table-striped table-hover table-valign-middle">
-                <thead class="thead-dark ">
-                    <tr>
-                        <th>{{ __('responsibility.label_responsibility') }}</th>
-                        @can('servidor-edit')
-                            <th class="text-center">{{ __('app.label-actions') }}</th>
-                        @endcan
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($responsibilities as $position)
+    @can('servidor-create')
+        <div class="row">
+            <div class="col">
+                <div class="float-right mb-4">
+                    <a class="btn btn-secondary" href="{{ route('responsibilities.create') }}">
+                        <span class="fas fa-plus mr-1"></span>{{ __('app.btn-new') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endcan
+
+    @if (count($responsibilities) > 0)
+        <div class="card">
+            <div class="card-body table-responsive p-0">
+                <table class="table table-bordered table-sm table-striped table-hover table-valign-middle">
+                    <thead class="thead-dark ">
                         <tr>
-                            <td style="width: 90%">{{ $position->name }}</td>
+                            <th>{{ __('responsibility.label_responsibility') }}</th>
                             @can('servidor-edit')
-                                <td>
-                                    {{-- <form action="{{ url('responsibilities/'. $position->id ) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-app float-right disable"><i class="fas fa-trash"></i> Excluir</button>
-                                </form> --}}
-                                    <a class="btn btn-app float-right" href="responsibilities/{{ $position->id }}/edit">
-                                        <i class="fas fa-edit"></i> {{ __('app.btn-edit') }}</a>
-                                </td>
+                                <th class="text-center">{{ __('app.label-actions') }}</th>
                             @endcan
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($responsibilities as $position)
+                            <tr>
+                                <td style="width: 90%">{{ $position->name }}</td>
+                                @can('servidor-edit')
+                                    <td>
+                                        {{-- <form action="{{ url('responsibilities/'. $position->id ) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-app float-right disable"><i class="fas fa-trash"></i> Excluir</button>
+                                    </form> --}}
+                                        <a class="btn btn-app float-right" href="responsibilities/{{ $position->id }}/edit">
+                                            <i class="fas fa-edit"></i> {{ __('app.btn-edit') }}</a>
+                                    </td>
+                                @endcan
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            {{ $responsibilities->links() }}
         </div>
-        {{ $responsibilities->links() }}
-    </div>
-@else
-    <div class="alert alert-info d-flex align-items-center" role="alert">
-        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-            <use xlink:href="#info-fill" />
-        </svg>
-        <div class="ml-2">
-            {{ __('responsibility.no-positions-registered') }}
+    @else
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+                <use xlink:href="#info-fill" />
+            </svg>
+            <div class="ml-2">
+                {{ __('responsibility.no-positions-registered') }}
+            </div>
         </div>
-    </div>
-@endif
+    @endif
+
 @stop
 
 @section('js')
-
-@stop
+    @if ($message = Session::get('success'))
+        @alertSuccess({{ $message }});
+    @endif
+@endsection

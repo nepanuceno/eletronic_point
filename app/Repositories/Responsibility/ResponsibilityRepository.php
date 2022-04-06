@@ -15,7 +15,7 @@ class ResponsibilityRepository implements ResponsibilityRepositoryInterface
     }
 
     public function listResponsibilities(){
-        return $this->model->all();
+        return $this->model->paginate(15);
     }
 
     public function createResponsibility(array $inputs)
