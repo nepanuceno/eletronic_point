@@ -12,4 +12,9 @@ class Departament extends Model
     use HasFactory, SoftDeletes, IsSelfReferencing;
 
     protected $fillable = ['name', 'parent_id'];
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'departament_id');
+    }
 }

@@ -11,4 +11,9 @@ class Responsibility extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name'];
+
+    public function responsibility()
+    {
+        return $this->belongsTo(Responsibility::class);
+    }
 }

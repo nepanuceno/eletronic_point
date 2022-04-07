@@ -72,4 +72,9 @@ class User extends Authenticatable
             return false;
         }
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'user_id');
+    }
 }

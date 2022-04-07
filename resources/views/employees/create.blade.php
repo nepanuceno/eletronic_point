@@ -46,24 +46,14 @@
 
                         <div class="form-group">
                             <div class="input-form">
-                                <label class="form-label" for="name">Servidor</label>
-                                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name"
-                                    id="name" value="{{ isset($employee) ? $employee->name : old('name') }}" />
-                                @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <div class="input-form">
-                                <label class="form-label" for="email">E-Mail</label>
-                                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email"
-                                    id="email" value="{{ isset($employee) ? $employee->email : old('email') }}" />
-                                @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <label class="form-label" for="departament">Usuários</label>
+                                <select class="form-control select2" name="user_id" id="departament">
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}"
+                                            {{ isset($employee) ? ($employee->user_id == $user->id ? 'selected=selected' : '') : '' }}>
+                                            {{ $user->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -94,7 +84,7 @@
                         <div class="form-group">
                             <div class="input-form">
                                 <label class="form-label" for="departament">Departamento</label>
-                                <select class="form-control select2" name="departament" id="departament">
+                                <select class="form-control select2" name="departament_id" id="departament">
                                     @foreach ($departaments as $item)
                                         <option value="{{ $item->id }}"
                                             {{ isset($employee) ? ($employee->departament_id == $item->id ? 'selected=selected' : '') : '' }}>
@@ -106,11 +96,11 @@
 
                         <div class="form-group">
                             <div class="input-form">
-                                <label class="form-label" for="position">Cargo</label>
-                                <select class="form-control select2" name="position" id="position">
-                                    @foreach ($positions as $item)
+                                <label class="form-label" for="responsibility">Cargo</label>
+                                <select class="form-control select2" name="responsibility_id" id="responsibility">
+                                    @foreach ($responsibilities as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ isset($employee) ? ($employee->position_id == $item->id ? 'selected=selected' : '') : '' }}>
+                                            {{ isset($employee) ? ($employee->responsibility_id == $item->id ? 'selected=selected' : '') : '' }}>
                                             {{ $item->name }}</option>
                                     @endforeach
                                 </select>
