@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\EmployeeService;
 
 class EmployeeController extends Controller
 {
+
+    protected $service;
+
+    public function __construct(EmployeeService $service)
+    {
+        $this->service = $service;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +23,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = $this->service->listEmployees();
+        return view('employees.index', compact('employees'));
     }
 
     /**

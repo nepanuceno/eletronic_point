@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Services;
 
 use App\Repositories\Interfaces\Departament\DepartamentRepositoryInterface;
-use Illuminate\Database\Eloquent\Model;
 
 class DepartamentService
 {

@@ -8,6 +8,7 @@ use App\Http\Controllers\Acl\RoleController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Acl\RoleUserController;
 use App\Http\Controllers\DepartamentController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ResponsibilityController;
 use App\Http\Controllers\User\UserProfileImageController;
 use App\Models\Departament;
@@ -40,6 +41,7 @@ Route::middleware(['auth'])->group(function() {
     Route::delete('/departaments/{id}/restore', [DepartamentController::class, 'restore'])->name('departament.restore');
 
     Route::resource('responsibilities', ResponsibilityController::class);
+    Route::resource('employees', EmployeeController::class);
 });
 
 Route::get('/confirm-password', function () {

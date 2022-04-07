@@ -2,17 +2,20 @@
 
 namespace App\Providers;
 
+use App\Models\Employee;
 use App\Models\Departament;
 use App\Models\Responsibility;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Role\RoleRepository;
 use App\Repositories\User\UserRepository;
+use App\Repositories\Employee\EmployeeRepository;
 use App\Repositories\Permission\PermissionRepository;
 use App\Repositories\User\UserUpdatePictureRepository;
 use App\Repositories\Departament\DepartamentRepository;
 use App\Repositories\Interfaces\Role\RoleRepositoryInterface;
 use App\Repositories\Interfaces\User\UserRepositoryInterface;
 use App\Repositories\Responsibility\ResponsibilityRepository;
+use App\Repositories\Interfaces\Employee\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\Permission\PermissionRepositoryInterface;
 use App\Repositories\Interfaces\User\UserUpdatePictureRepositoryInterface;
 use App\Repositories\Interfaces\Departament\DepartamentRepositoryInterface;
@@ -40,6 +43,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ResponsibilityRepositoryInterface::class, ResponsibilityRepository::class);
         $this->app->bind(ResponsibilityRepositoryInterface::class, function(){
             return new ResponsibilityRepository(new Responsibility());
+        });
+
+        $this->app->bind(EmployeeRepositoryInterface::class, EmployeeRepository::class);
+        $this->app->bind(EmployeeRepositoryInterface::class, function(){
+            return new EmployeeRepository(new Employee());
         });
     }
 

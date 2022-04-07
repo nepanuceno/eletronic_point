@@ -101,3 +101,9 @@ Breadcrumbs::for('responsibilities.edit', function ($trail, $responsibility) {
     $trail->parent('responsibilities.index');
     $trail->push(__('responsibility.edit-responsibility'), route('responsibilities.edit', $responsibility->id));
 });
+
+// Home -> [Employees]
+Breadcrumbs::for('employees.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push(__('employee.list_employees'), route('employees.index'));
+});
