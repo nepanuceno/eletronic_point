@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class DepartamentController extends Controller
 {
     private $service;
+    protected $status;
 
     public function __construct(DepartamentService $service)
     {
@@ -23,7 +24,11 @@ class DepartamentController extends Controller
     public function index(Request $request)
     {
         $departaments = $this->service->list($request);
-        $status = $this->service->getStatusActive();
+        $status = $request;
+
+        // TODO $status = StatusActive::setStatusActive($request);
+        // $this->status=$status;
+
         return view('departaments.index', compact('departaments','status'));
     }
 

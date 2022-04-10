@@ -7,6 +7,7 @@ interface EmployeeRepositoryInterface
 {
     public function __construct(Model $model);
     public function listEmployees();
+    public function listDeactivatedEmployees();
     public function createEmployee(array $inputs);
     public function showEmployee($id);
     public function updateEmployee(array $inputs, $id);

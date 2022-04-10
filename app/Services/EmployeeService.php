@@ -7,14 +7,22 @@ class EmployeeService
 {
     protected $interface;
 
+    const ACTIVE=1;
+    const DEACTIVE=0;
+
     public function __construct(EmployeeRepositoryInterface $interface)
     {
         $this->interface = $interface;
     }
 
-    public function listEmployees()
+    public function listEmployees(&$request)
     {
-        return $this->interface->listEmployees();
+        if (!isset($request->status) || $request->status==self::ACTIVE) {
+            return $this->interface->listEmployees();
+        }
+        else if ($request->status == self::DEACTIVE) {
+            return $this->interface->listDeactivatedEmployees();
+        }
     }
 
     public function createEmployee(array $inputs)

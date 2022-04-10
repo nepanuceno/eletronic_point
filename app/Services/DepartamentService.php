@@ -6,33 +6,25 @@ use App\Repositories\Interfaces\Departament\DepartamentRepositoryInterface;
 class DepartamentService
 {
     protected $departament;
-    private $status;
+
+    const ACTIVE=1;
+    const DEACTIVE=0;
 
     public function __construct(DepartamentRepositoryInterface $departamentRepositoryInterface)
     {
         $this->departament = $departamentRepositoryInterface;
     }
 
-    public function list($request=null)
+    public function list(&$request=null)
     {
-        if (!isset($request->status) || $request->status==1) {
-            $this->setStatusActive(0);
+        if (!isset($request->status) || $request->status==self::ACTIVE) {
+            $request=self::DEACTIVE;
             return $this->departament->listDepartaments();
         }
-        else if ($request->status == 0) {
-            $this->setStatusActive(1);
+        else if ($request->status == self::DEACTIVE) {
+            $request=self::ACTIVE;
             return $this->departament->listDeactivatedDepartments();
         }
-    }
-
-    public function setStatusActive($status)
-    {
-        $this->status = $status;
-    }
-
-    public function getStatusActive()
-    {
-        return $this->status;
     }
 
     public function get($id)

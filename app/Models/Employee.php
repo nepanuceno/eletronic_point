@@ -19,11 +19,11 @@ class Employee extends Model
 
     public function departament()
     {
-        return $this->belongsTo(Departament::class, 'id');
+        return $this->belongsTo(Departament::class);
     }
 
     public function responsibility()
     {
-        return $this->belongsTo(Responsibility::class, 'id');
+        return $this->belongsTo(Responsibility::class);
     }
 }

@@ -111,3 +111,7 @@ Breadcrumbs::for('employees.create', function ($trail) {
     $trail->parent('employees.index');
     $trail->push(__('employee.label-create-employee'), route('employees.create'));
 });
+Breadcrumbs::for('employees.edit', function ($trail, $employee) {
+    $trail->parent('employees.index');
+    $trail->push(__('employee.label-edit-employee'), route('employees.edit', $employee->id));
+});

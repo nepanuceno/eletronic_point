@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function() {
 
     Route::resource('responsibilities', ResponsibilityController::class);
     Route::resource('employees', EmployeeController::class);
+    Route::get('list-employees', [EmployeeController::class,'listEmployeesWithAjax'])->name('list.employees');
 });
 
 Route::get('/confirm-password', function () {

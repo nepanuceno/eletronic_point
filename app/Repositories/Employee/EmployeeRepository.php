@@ -15,7 +15,12 @@ class EmployeeRepository implements EmployeeRepositoryInterface
 
     public function listEmployees()
     {
-        return $this->model->paginate(15);
+        return $this->model->select();
+    }
+
+    public function listDeactivatedEmployees()
+    {
+        return$this->model->onlyTrashed()->select();
     }
 
     public function createEmployee(array $inputs)
