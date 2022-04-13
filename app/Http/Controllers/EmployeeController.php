@@ -41,36 +41,7 @@ class EmployeeController extends Controller
 
     public function listEmployeesWithAjax(Request $request)
     {
-        $employees = $this->service->listEmployees($request);
-
-        return Datatables::of($employees)
-                ->addIndexColumn()
-                ->addColumn('employee', function($employee){
-                    $url = url('users.show', ['id'=>$employee->user->id]);
-                    return "<a href='$url'>".$employee->user->name."</a>";
-                })
-                ->addColumn('departament', function($employee){
-                    return $employee->departament->name;
-                })
-                ->addColumn('responsibility', function($employee){
-                    return $employee->responsibility->name;
-                })
-                ->addColumn('action', function($employee){
-                        $btn = '
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>';
-                        return $btn;
-                })
-                ->rawColumns(['employee', 'action'])
-                ->make(true);
+        return $this->service->listEmployees($request);
     }
 
     /**
@@ -107,7 +78,7 @@ class EmployeeController extends Controller
     public function show($id)
     {
         $employee = $this->service->getEmployee($id);
-        return view('employees.index', compact('employee'));
+        return view('employees.show', compact('employee'));
     }
 
     /**
@@ -147,6 +118,7 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         $this->service->deleteEmployee($id);
+        return redirect()->back()->with('success', 'Show');
     }
 
      /**
@@ -158,5 +130,6 @@ class EmployeeController extends Controller
     public function restore($id)
     {
         $this->service->restoreEmployee($id);
+        return redirect()->back()->with('success', 'Show');
     }
 }

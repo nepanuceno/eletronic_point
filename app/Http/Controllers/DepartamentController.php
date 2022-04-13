@@ -26,9 +26,6 @@ class DepartamentController extends Controller
         $departaments = $this->service->list($request);
         $status = $request;
 
-        // TODO $status = StatusActive::setStatusActive($request);
-        // $this->status=$status;
-
         return view('departaments.index', compact('departaments','status'));
     }
 

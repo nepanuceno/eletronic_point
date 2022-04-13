@@ -419,6 +419,11 @@ return [
                     'asset' => true,
                     'location' => 'vendor\datatables\css\dataTables.bootstrap4.min.css',
                 ],
+            ],
+        ],
+        'customJsDatatables' => [
+            'active' => false,
+            'files' => [
                 [
                     'type' => 'js',
                     'asset' => true,

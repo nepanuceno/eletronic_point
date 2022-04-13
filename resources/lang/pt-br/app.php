@@ -11,6 +11,7 @@ return [
     'btn-save'  => 'Salvar',
     'btn-edit'    =>  'Editar',
     'btn-corfirm'    =>  'Confirmar',
+    'btn-details'    =>  'Detalhes',
     'btn-disable'    =>  'Desabilitar',
     'btn-cancel'    =>  'Cancelar',
     'btn-back'  =>  'Voltar',
