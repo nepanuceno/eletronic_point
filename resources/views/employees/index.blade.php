@@ -36,19 +36,22 @@
         </div>
     </div>
 
-    <table id="table-employees" class="table table-sm table-stricted display" style="width:100%">
-        <thead>
-            <tr class="thead-dark">
-                <th>{{ __('employee.hr-id') }}</th>
-                <th>{{ __('employee.hr-employee') }}</th>
-                <th>{{ __('employee.hr-departament') }}</th>
-                <th>{{ __('employee.hr-responsibility') }}</th>
-                <th>{{ __('employee.hr-matriculation') }}</th>
-                <th>{{ __('employee.hr-telephone') }}</th>
-                <th>{{ __('app.label-actions') }}</th>
-            </tr>
-        </thead>
-    </table>
+    <div class="border border-secondary">
+        <div class="bg-black"> Teste</div>
+        <table id="table-employees" class="table table-sm table-stricted display" style="width:100%">
+            <thead>
+                <tr class="thead-dark">
+                    <th>{{ __('employee.hr-id') }}</th>
+                    <th>{{ __('employee.hr-employee') }}</th>
+                    <th>{{ __('employee.hr-departament') }}</th>
+                    <th>{{ __('employee.hr-responsibility') }}</th>
+                    <th>{{ __('employee.hr-matriculation') }}</th>
+                    <th>{{ __('employee.hr-telephone') }}</th>
+                    <th>{{ __('app.label-actions') }}</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
 @stop
 
@@ -58,7 +61,6 @@
     @endif
     <script>
          $(function () {
-             console.log(table);
             var table = $('#table-employees').DataTable({
                 processing: true,
                 serverSide: true,
